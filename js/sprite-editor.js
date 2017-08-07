@@ -85,6 +85,8 @@ var Sprite = function(){
     this.newFrame() //create initial frame
   );
   this.curFrame = 0;
+
+  this.animator;
 };
 
 Sprite.prototype.newFrame = function(){
@@ -133,6 +135,18 @@ Sprite.prototype.setCell = function(row, col, value, fg_color, bg_color){
     bg_color: bg_color
   };
 };
+
+Sprite.prototype.play = function(){
+  this.stop()
+  var spr = this;
+  this.animator = setInterval(function(){
+    spr.curFrame = (spr.curFrame + 1) % spr.frames.length;
+    drawAll();
+  }, 250);
+}
+Sprite.prototype.stop = function(){
+  clearInterval(this.animator)
+}
 
 
 var FrameSelector = function(context, sprite){
@@ -196,6 +210,8 @@ $(function(){
   $("#frameSelectorCanvas").mousedown(framemousedown);
   $("#frameSelectorCanvas").mousemove(framemousemove);
   $("#frameSelectorCanvas").mouseup(framemouseup);
+  $("#playBtn").click(function(){sprite.play();});
+  $("#stopBtn").click(function(){sprite.stop();});
 
   // initialize
   var canvas = document.getElementById("editorCanvas");
