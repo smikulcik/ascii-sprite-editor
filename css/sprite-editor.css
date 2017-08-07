@@ -42,3 +42,7 @@ body {
   margin: auto;
   width: 400px;
 }
+
+#frameSelectorCanvas {
+  border: 1px solid grey;
+}
