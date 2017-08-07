@@ -1,0 +1,6 @@
+---
+applications:
+ - name: AsciiSpriteEditor
+   host: AsciiSpriteEditor
+   memory: 128M
+   buildpack: https://github.com/cloudfoundry/php-buildpack.git
