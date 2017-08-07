@@ -48,7 +48,7 @@ Editor.prototype.drawOverlays = function(){
 
 Editor.prototype.draw = function(){
   this.clear();
-  this.sprite.draw(this.context, this.sprite.getCurFrame(), this.offset_x, this.offset_y, this.cell_width, this.cell_height);
+  this.sprite.draw(this.context, this.sprite.curFrame, this.offset_x, this.offset_y, this.cell_width, this.cell_height);
   this.drawOverlays();
 };
 
@@ -98,11 +98,12 @@ Sprite.prototype.newFrame = function(){
   return frame;
 };
 
-Sprite.prototype.getCurFrame = function(){
-  return this.frames[0];
-};
+Sprite.prototype.insertFrame = function(){
+  var newFrame = JSON.parse(JSON.stringify(this.frames[this.curFrame]));
+  this.frames.splice(this.curFrame+1, 0, newFrame);
+}
 
-Sprite.prototype.draw = function(context, frame, offset_x, offset_y, cell_width, cell_height){
+Sprite.prototype.draw = function(context, frame_idx, offset_x, offset_y, cell_width, cell_height){
   var font_size = cell_height*2/3 - 0.059;  // font-size in pt
   context.font = "normal " + font_size + "pt Courier";
   context.textBaseline="top";
@@ -110,18 +111,18 @@ Sprite.prototype.draw = function(context, frame, offset_x, offset_y, cell_width,
 
   for(var i=0;i<this.height;i++){
     for(var j=0;j<this.width;j++){
-      if(this.getCurFrame()[i][j] !== null){
-        context.fillStyle = frame[i][j].bg_color;
+      if(this.frames[frame_idx][i][j] !== null){
+        context.fillStyle = this.frames[frame_idx][i][j].bg_color;
         context.fillRect(offset_x + j*cell_width, offset_y + i*cell_height, cell_width, cell_height);
-        context.fillStyle = frame[i][j].fg_color;
-        context.fillText(frame[i][j].value, offset_x + j*cell_width, offset_y + i*cell_height);
+        context.fillStyle = this.frames[frame_idx][i][j].fg_color;
+        context.fillText(this.frames[frame_idx][i][j].value, offset_x + j*cell_width, offset_y + i*cell_height);
       }
     }
   }
 };
 
 Sprite.prototype.setCell = function(row, col, value, fg_color, bg_color){
-  var frame = this.getCurFrame();
+  var frame = this.frames[this.curFrame];
   if(value == null){
     frame[row][col] = null;
     return;
@@ -137,23 +138,40 @@ Sprite.prototype.setCell = function(row, col, value, fg_color, bg_color){
 var FrameSelector = function(context, sprite){
   this.context = context;
   this.sprite = sprite;
+  this.offset_y = 0;
+
+  this.frame_width = 100;
+  this.cell_width = this.frame_width/this.sprite.width;
+  this.cell_height = this.cell_width/font_aspect_ratio;
+  this.frame_height = this.cell_height*this.sprite.height;
 }
 
 FrameSelector.prototype.draw = function(){
-  this.context.clearRect(0, 0, 100, 400);
-  var cell_width = 100/this.sprite.width;
-  var cell_height = cell_width/font_aspect_ratio;
+  this.context.fillStyle = this.context.createPattern(checker_img, 'repeat');;
+  this.context.fillRect(0,0,100,400)
+
   for(var i=0;i<this.sprite.frames.length;i++){
-    this.sprite.draw(this.context, this.sprite.frames[i], 0, i*110, cell_width, cell_height);
+    this.sprite.draw(this.context, i, 0, this.offset_y + i*(this.frame_height + 10), this.cell_width, this.cell_height);
     if(i === this.sprite.curFrame){
       this.context.beginPath();
       this.context.strokeStyle="green";
       this.context.lineWidth="2";
-      this.context.rect(0, i*110, 100, cell_height*this.sprite.height);
+      this.context.rect(0, this.offset_y + i*(this.frame_height + 10), this.frame_width, this.frame_height);
       this.context.stroke();
+    }else{
+
+        this.context.beginPath();
+        this.context.strokeStyle="grey";
+        this.context.lineWidth="2";
+        this.context.rect(0, this.offset_y + i*(this.frame_height + 10), this.frame_width, this.frame_height);
+        this.context.stroke();
     }
   }
 };
+
+FrameSelector.prototype.select = function(idx){
+  this.sprite.curFrame = idx;
+}
 
 
 function clamp(val, min, max){
@@ -174,6 +192,10 @@ $(function(){
   $("#editorCanvas").mouseup(mouseup);
   $("body").keypress(keypress);
   $("body").keyup(keypress);
+  $("#insertFrame").click(function(){sprite.insertFrame();drawAll();});
+  $("#frameSelectorCanvas").mousedown(framemousedown);
+  $("#frameSelectorCanvas").mousemove(framemousemove);
+  $("#frameSelectorCanvas").mouseup(framemouseup);
 
   // initialize
   var canvas = document.getElementById("editorCanvas");
@@ -253,5 +275,29 @@ var keypress = function(e){
       editor.selected.x = clamp(editor.selected.x + 1, 0, editor.sprite.width-1);
       drawAll()
     }
+  }
+};
+
+
+var frameisDragging = false;
+var framemousedown = function(e){
+  frameisDragging = false;
+};
+
+var framemousemove = function(e){
+  if(e.buttons === 1){
+    frameisDragging = true;
+    frameSelector.offset_y = clamp(frameSelector.offset_y + e.originalEvent.movementY, Math.min(400 - sprite.frames.length*(frameSelector.frame_height + 10) + 10, 0), 0);
+    frameSelector.draw();
+  }
+};
+
+var framemouseup = function(e){
+  if(!frameisDragging){
+    var row = clamp(Math.floor((e.offsetY - frameSelector.offset_y) / 110), 0, sprite.frames.length-1);
+    frameSelector.select(row);
+    drawAll();
+  }else{
+    frameisDragging = false;
   }
 };
