@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/sprite-editor.css" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./js/sprite-editor.js"></script>
+</head>
+<body>
+  <h1>Ascii Sprite Editor</h1>
+
+  <div  id="editor">
+    <div id="toppane">
+      <form>
+        <label>Canvas Size:</label><input id="canvaswidth" type=number />x<input  id="canvasheight" type=number />
+      </form>
+    </div>
+
+    <div id="leftpane">
+      <button id="playBtn"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+      <button id="saveBtn">Save</button>
+    </div>
+
+    <canvas id="editorCanvas" width=800 height=600></canvas>
+
+    <div id="rightpane">
+      <label>Foreground Color:</label><input id="fgColor" type=color value="#ffffff"></input>
+      <label>Background Color:</label><input id="bgColor" type=color value="#000000"></input>
+    </div>
+
+    <div id="bottompane">
+      <label>Duration (miliseconds)</label><input type=number></input>
+    </div>
+  </div>
+</body>
+</html>
