@@ -21,7 +21,7 @@ All new features or major refactorings should start with a specification in the 
 - **Language**: TypeScript only.
 - **Linter**: ESLint (strictly followed).
 - **Architecture**: Electron (Main/Renderer separation).
-- **Styling**: Vanilla CSS.
+- **Styling**: Tailwind CSS.
 
 ## Communication
 
