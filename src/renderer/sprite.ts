@@ -2,19 +2,26 @@ export interface Cell {
     value: string;
     fg_color: string;
     bg_color: string;
+    weight?: 'normal' | 'bold' | 'bright' | 'dim';
+    italic?: boolean;
+    underline?: boolean;
+    blink?: boolean;
+    strike_through?: boolean;
 }
 
 export type Frame = (Cell | null)[][];
 
 export class Sprite {
-    width: number = 10;
-    height: number = 5;
+    width: number = 20;
+    height: number = 10;
     frames: Frame[] = [];
     curFrame: number = 0;
     animator: NodeJS.Timeout | null = null;
     onDraw: () => void = () => { };
 
-    constructor() {
+    constructor(width: number = 20, height: number = 10) {
+        this.width = width;
+        this.height = height;
         this.frames.push(this.newFrame());
     }
 
@@ -27,9 +34,10 @@ export class Sprite {
     }
 
     resize(newWidth: number, newHeight: number): void {
+        const oldFrames = this.frames;
         this.width = newWidth;
         this.height = newHeight;
-        this.frames = this.frames.map((frame) => {
+        this.frames = oldFrames.map((frame) => {
             const newFrame = this.newFrame();
             for (let i = 0; i < Math.min(frame.length, newHeight); i++) {
                 for (let j = 0; j < Math.min(frame[i].length, newWidth); j++) {
@@ -45,6 +53,14 @@ export class Sprite {
         this.frames.splice(this.curFrame + 1, 0, newFrame);
     }
 
+    deleteFrame(index: number): void {
+        if (this.frames.length <= 1) return;
+        this.frames.splice(index, 1);
+        if (this.curFrame >= this.frames.length) {
+            this.curFrame = this.frames.length - 1;
+        }
+    }
+
     draw(
         context: CanvasRenderingContext2D,
         frame_idx: number,
@@ -53,36 +69,64 @@ export class Sprite {
         cell_width: number,
         cell_height: number
     ): void {
-        const font_size = cell_height * (2 / 3) - 0.059; // font-size in pt
-        context.font = `normal ${font_size}pt Courier`;
-        context.textBaseline = 'top';
-        context.textAlign = 'left';
-
         const frame = this.frames[frame_idx];
+        if (!frame) return;
+
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 const cell = frame[i][j];
                 if (cell !== null) {
-                    context.fillStyle = cell.bg_color;
-                    context.fillRect(offset_x + j * cell_width, offset_y + i * cell_height, cell_width, cell_height);
-                    context.fillStyle = cell.fg_color;
-                    context.fillText(cell.value, offset_x + j * cell_width, offset_y + i * cell_height);
+                    const x = offset_x + j * cell_width;
+                    const y = offset_y + i * cell_height;
+
+                    // Draw background
+                    if (cell.bg_color && cell.bg_color !== 'transparent') {
+                        context.fillStyle = cell.bg_color;
+                        context.fillRect(x, y, cell_width, cell_height);
+                    }
+
+                    // Prepare text style
+                    let fontStyle = '';
+                    if (cell.italic) fontStyle += 'italic ';
+                    if (cell.weight === 'bold' || cell.weight === 'bright') fontStyle += 'bold ';
+                    
+                    const font_size = cell_height * 0.8;
+                    context.font = `${fontStyle}${font_size}px Courier, monospace`;
+                    context.textBaseline = 'middle';
+                    context.textAlign = 'center';
+
+                    // Draw text
+                    context.fillStyle = cell.fg_color === 'transparent' ? 'rgba(0,0,0,0)' : cell.fg_color;
+                    context.fillText(cell.value, x + cell_width / 2, y + cell_height / 2);
+
+                    // Underline
+                    if (cell.underline) {
+                        context.beginPath();
+                        context.moveTo(x + 2, y + cell_height - 2);
+                        context.lineTo(x + cell_width - 2, y + cell_height - 2);
+                        context.strokeStyle = cell.fg_color;
+                        context.lineWidth = 1;
+                        context.stroke();
+                    }
+
+                    // Strike-through
+                    if (cell.strike_through) {
+                        context.beginPath();
+                        context.moveTo(x + 2, y + cell_height / 2);
+                        context.lineTo(x + cell_width - 2, y + cell_height / 2);
+                        context.strokeStyle = cell.fg_color;
+                        context.lineWidth = 1;
+                        context.stroke();
+                    }
                 }
             }
         }
     }
 
-    setCell(row: number, col: number, value: string | null, fg_color?: string, bg_color?: string): void {
+    setCell(row: number, col: number, cellData: Cell | null): void {
+        if (row < 0 || row >= this.height || col < 0 || col >= this.width) return;
         const frame = this.frames[this.curFrame];
-        if (value === null) {
-            frame[row][col] = null;
-            return;
-        }
-        frame[row][col] = {
-            value: value,
-            fg_color: fg_color || '#ffffff',
-            bg_color: bg_color || '#000000'
-        };
+        frame[row][col] = cellData;
     }
 
     play(interval: number = 250): void {
