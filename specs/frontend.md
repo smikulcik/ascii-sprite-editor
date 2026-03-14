@@ -58,6 +58,8 @@
   - Save As (JSON)
   - Export
     - GIF
+- View options
+  - Theme Switcher (Light / Dark)
 
 ## Style
 

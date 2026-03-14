@@ -12,7 +12,7 @@
 }
 
 :root {
-  /* Blueprint (Light Mode) */
+  /* Blueprint (Light Mode) - Default */
   --bg: #fafafa;
   --surface: #f1f5f9;
   --primary: #2563eb;
@@ -36,18 +36,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Nordic Aurora (Dark Mode) */
-    --bg: #0f111a;
-    --surface: #1a1c25;
-    --primary: #c792ea;
-    --secondary: #f78c6c;
-    --accent: #ffcb6b;
-    --text: #a6accd;
-    --border: #292d3e;
-    --detail: #82aaff;
-  }
+.dark {
+  /* Nordic Aurora (Dark Mode) */
+  --bg: #0f111a;
+  --surface: #1a1c25;
+  --primary: #c792ea;
+  --secondary: #f78c6c;
+  --accent: #ffcb6b;
+  --text: #a6accd;
+  --border: #292d3e;
+  --detail: #82aaff;
+  
+  color-scheme: dark;
 }
 
 body {
