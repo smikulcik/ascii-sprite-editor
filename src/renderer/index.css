@@ -13,14 +13,14 @@
 
 :root {
   /* Blueprint (Light Mode) - Default */
-  --bg: #fafafa;
-  --surface: #f1f5f9;
+  --bg: #ffffff;
+  --surface: #f8fafc;
   --primary: #2563eb;
   --secondary: #4f46e5;
   --accent: #ea580c;
-  --text: #111827;
-  --border: #e1e4e8;
-  --detail: #3b82f6;
+  --text: #000000;
+  --border: #cbd5e1;
+  --detail: #1e293b;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -39,12 +39,12 @@
 .dark {
   /* Nordic Aurora (Dark Mode) */
   --bg: #0f111a;
-  --surface: #1a1c25;
+  --surface: #1e212b;
   --primary: #c792ea;
   --secondary: #f78c6c;
   --accent: #ffcb6b;
-  --text: #a6accd;
-  --border: #292d3e;
+  --text: #e2e8f0;
+  --border: #334155;
   --detail: #82aaff;
   
   color-scheme: dark;

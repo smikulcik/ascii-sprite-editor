@@ -1,10 +1,10 @@
 import React from 'react'
+import { createPortal } from 'react-dom'
 import { 
   Pencil, Square, Type, Eraser, 
   Bold as BoldIcon, Italic as ItalicIcon, 
   Underline as UnderlineIcon, Strikethrough,
-  Palette as PaletteIcon,
-  ChevronDown
+  Palette as PaletteIcon
 } from 'lucide-react'
 import { useEditor } from '../contexts/EditorContext'
 import { useSprite } from '../contexts/SpriteContext'
@@ -30,6 +30,25 @@ const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ docked }) => {
   const { setPaletteId } = useSprite()
   
   const [showPaletteMenu, setShowPaletteMenu] = React.useState(false)
+  const paletteMenuRef = React.useRef<HTMLDivElement>(null)
+  const paletteButtonRef = React.useRef<HTMLButtonElement>(null)
+  const [dropdownPos, setDropdownPos] = React.useState({ top: 0, left: 0 })
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (paletteMenuRef.current && !paletteMenuRef.current.contains(event.target as Node)) {
+        setShowPaletteMenu(false)
+      }
+    }
+    if (showPaletteMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+      if (paletteButtonRef.current) {
+        const rect = paletteButtonRef.current.getBoundingClientRect()
+        setDropdownPos({ top: rect.top, left: rect.right + 8 })
+      }
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [showPaletteMenu])
 
   const handleColorClick = (color: string, e: React.MouseEvent) => {
     if (e.shiftKey) {
@@ -60,7 +79,7 @@ const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ docked }) => {
   };
 
   return (
-    <div className={`bg-brand-surface border-r border-brand-border flex flex-col items-center w-10 transition-all ${docked ? 'h-full border-l-0' : 'rounded-lg shadow-2xl overflow-hidden'}`}>
+    <div className={`bg-brand-surface border-r border-brand-border flex flex-col items-center w-10 transition-all z-40 ${docked ? 'h-full border-l-0' : 'rounded-lg shadow-2xl'}`}>
       <div className="flex-1 w-full overflow-y-auto overflow-x-hidden p-0.5 flex flex-col items-center gap-1.5 scrollbar-thin scrollbar-thumb-brand-border/50 scrollbar-track-transparent scrollbar-gutter-stable scrollbar-hide-fullscreen pb-2">
         {/* Tool Selection */}
         <div className="flex flex-col gap-0.5 w-full bg-brand-bg/30 rounded border border-brand-border/20 shrink-0">
@@ -145,14 +164,19 @@ const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ docked }) => {
           {/* Palette Dropdown Move to Top */}
           <div className="relative w-full flex justify-center">
             <button 
+              ref={paletteButtonRef}
               onClick={() => setShowPaletteMenu(!showPaletteMenu)}
               className="w-full h-8 flex items-center justify-center bg-brand-bg/40 hover:bg-brand-surface border border-brand-border/20 rounded transition-all text-brand-primary hover:text-white"
             >
               <PaletteIcon size={16} />
             </button>
             
-            {showPaletteMenu && (
-              <div className={`absolute left-full top-0 ml-1 w-48 bg-brand-surface border border-brand-border rounded-lg shadow-2xl z-50 p-1 animate-in fade-in slide-in-from-left-2 border-l-2 border-l-brand-primary`}>
+            {showPaletteMenu && createPortal(
+              <div 
+                ref={paletteMenuRef}
+                style={{ top: dropdownPos.top, left: dropdownPos.left }}
+                className={`fixed w-48 bg-brand-surface border border-brand-border rounded-lg shadow-2xl z-[100] p-1 animate-in fade-in slide-in-from-left-2 border-l-2 border-l-brand-primary`}
+              >
                 <div className="px-2 py-1 text-[9px] font-black text-brand-text/40 uppercase tracking-widest border-b border-brand-border/20 mb-1">
                   Palettes
                 </div>
@@ -170,7 +194,8 @@ const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ docked }) => {
                     {activePalette?.id === p.id && <div className="w-1.5 h-1.5 bg-brand-primary rounded-full" />}
                   </button>
                 ))}
-              </div>
+              </div>,
+              document.body
             )}
           </div>
 

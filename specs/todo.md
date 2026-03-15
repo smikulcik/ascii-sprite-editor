@@ -11,6 +11,7 @@ we queue them up for the agent to start work on
 - [x] Improve UI contrast and font sizes
 - [x] Implement sidebar scrolling for minimized windows
 - [x] All tools visible in full screen
+- [ ] UI Contrast needs more. Gridlines and text in dark mode are too dark. same for light mode
 
 ### Drawing tools layout (Completed)
 
@@ -21,8 +22,8 @@ we queue them up for the agent to start work on
 - [x] UI hint for shift-click
 - [x] Show transparent/sprite background default color
 - [x] Show Unicode char name/hex (e.g. U+1234)
-- [ ] When screen minimized, allow for sidebar to "Scroll".
-- [ ] Full screen should show all tools.
+- [x] When screen minimized, allow for sidebar to "Scroll".
+- [x] Full screen should show all tools.
 
 #### Canvas options (Completed)
 
@@ -92,4 +93,5 @@ we queue them up for the agent to start work on
 
 ## Color palattes
 
-- Importing
+- Importing palettes doesn't seem to work.
+

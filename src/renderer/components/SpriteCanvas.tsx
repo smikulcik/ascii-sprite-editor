@@ -25,7 +25,7 @@ const SpriteCanvas: React.FC = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     // Draw grid
-    ctx.strokeStyle = 'rgba(128, 128, 128, 0.1)'
+    ctx.strokeStyle = 'rgba(128, 128, 128, 0.2)'
     ctx.lineWidth = 1
     for (let r = 0; r <= height; r++) {
       ctx.beginPath()
