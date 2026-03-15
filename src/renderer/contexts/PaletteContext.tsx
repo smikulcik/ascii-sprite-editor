@@ -38,13 +38,51 @@ const BLUEPRINT: Palette = {
   ]
 };
 
+export const ANSI_COLOR_NAMES = [
+  'Black', 'Red', 'Green', 'Yellow', 'Blue', 'Magenta', 'Cyan', 'White',
+  'Gray', 'Bright Red', 'Bright Green', 'Bright Yellow', 'Bright Blue', 'Bright Magenta', 'Bright Cyan', 'Bright White'
+];
+
+const VGA_CONSOLE: Palette = {
+  id: 'vga-console',
+  name: 'VGA Console',
+  backgroundColor: '#000000',
+  textColor: '#C4C4C4',
+  ansi: [
+    '#000000', '#C40000', '#00C400', '#C47E00', '#0000C4', '#C400C4', '#00C4C4', '#C4C4C4',
+    '#4E4E4E', '#DC4E4E', '#4EDC4E', '#F3F34E', '#4E4EDC', '#F34EF3', '#4EF3F3', '#FFFFFF'
+  ]
+};
+
+const XTERM: Palette = {
+  id: 'xterm',
+  name: 'xterm',
+  backgroundColor: '#000000',
+  textColor: '#FFFFFF',
+  ansi: [
+    '#000000', '#CD0000', '#00CD00', '#CDCD00', '#0000EE', '#CD00CD', '#00CDCD', '#E5E5E5',
+    '#7F7F7F', '#FF0000', '#00FF00', '#FFFF00', '#5C5CFF', '#FF00FF', '#00FFFF', '#FFFFFF'
+  ]
+};
+
+const WINDOWS_10: Palette = {
+  id: 'windows-10',
+  name: 'Windows 10',
+  backgroundColor: '#0C0C0C',
+  textColor: '#CCCCCC',
+  ansi: [
+    '#0C0C0C', '#C50F1F', '#13A10E', '#C19C00', '#0037DA', '#881798', '#3A96DD', '#CCCCCC',
+    '#767676', '#E74856', '#16C60C', '#F9F1A5', '#3B78FF', '#B4009E', '#61D6D6', '#F2F2F2'
+  ]
+};
+
 const PaletteContext = createContext<PaletteContextType | undefined>(undefined);
 
 export const PaletteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [palettes, setPalettes] = useState<Palette[]>(() => {
     const saved = localStorage.getItem('palettes');
     if (saved) return JSON.parse(saved);
-    return [NORDIC_AURORA, BLUEPRINT];
+    return [NORDIC_AURORA, BLUEPRINT, VGA_CONSOLE, XTERM, WINDOWS_10];
   });
 
   const [activePaletteId, setActivePaletteId] = useState<string>(() => {

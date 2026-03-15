@@ -6,38 +6,48 @@ const CanvasOptions: React.FC = () => {
   const { width, height, resize } = useSprite()
 
   return (
-    <div className="bg-brand-surface/90 backdrop-blur-md border border-brand-border/50 p-1.5 rounded-xl flex items-center gap-4 shadow-2xl text-brand-text">
-      <div className="flex items-center gap-3 px-2">
-        <div className="flex items-center gap-1.5">
-          <Maximize2 size={12} className="text-brand-primary/60" />
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/50">Dimensions</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <InputGroup 
-            label="W" 
-            value={width} 
-            onChange={(val) => resize(val, height)}
-          />
-          <span className="text-brand-text/20 font-light translate-y-[1px]">×</span>
-          <InputGroup 
-            label="H" 
-            value={height} 
-            onChange={(val) => resize(width, val)}
-          />
-        </div>
+    <div className="bg-brand-surface/90 backdrop-blur-md border border-brand-border p-4 rounded-2xl flex flex-col gap-6 shadow-2xl text-brand-text min-w-[300px]">
+      <div className="flex flex-col gap-1 border-b border-brand-border pb-3">
+        <h3 className="text-xs font-bold uppercase tracking-widest text-brand-primary">Canvas Settings</h3>
+        <p className="text-[10px] text-brand-text/40">Adjust dimensions and visibility</p>
       </div>
-      
-      <div className="w-px h-6 bg-brand-border/50" />
-      
-      <div className="flex items-center gap-2 px-1">
-        <button className="flex items-center gap-1.5 px-2 py-1 rounded-md hover:bg-brand-bg transition-colors group">
-          <Grid3X3 size={12} className="text-brand-text/40 group-hover:text-brand-primary" />
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/40 group-hover:text-brand-text/80">Grid Off</span>
-        </button>
-        <button className="flex items-center gap-1.5 px-2 py-1 rounded-md hover:bg-brand-bg transition-colors group opacity-40 cursor-not-allowed">
-          <Layers size={12} className="text-brand-text/40" />
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/40">Onion Skin</span>
-        </button>
+
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-1.5 px-1">
+            <Maximize2 size={12} className="text-brand-primary/60" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/50">Dimensions</span>
+          </div>
+          <div className="flex items-center gap-2 bg-brand-bg/30 p-2 rounded-xl border border-brand-border/20">
+            <InputGroup 
+              label="Width" 
+              value={width} 
+              onChange={(val) => resize(val, height)}
+            />
+            <span className="text-brand-text/20 font-light px-2">×</span>
+            <InputGroup 
+              label="Height" 
+              value={height} 
+              onChange={(val) => resize(width, val)}
+            />
+          </div>
+        </div>
+        
+        <div className="h-px bg-brand-border/50" />
+        
+        <div className="flex flex-col gap-2">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/50 px-1">Visibility</span>
+          <div className="grid grid-cols-2 gap-2">
+            <button className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-brand-bg/50 hover:bg-brand-surface border border-brand-border/30 transition-all group">
+              <Grid3X3 size={14} className="text-brand-text/40 group-hover:text-brand-primary" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/40 group-hover:text-brand-text/80">Toggle Grid</span>
+            </button>
+            <button className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-brand-bg/50 border border-brand-border/30 transition-all opacity-40 cursor-not-allowed">
+              <Layers size={14} className="text-brand-text/40" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/40">Onion Skin</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   )

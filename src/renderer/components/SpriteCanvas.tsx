@@ -1,6 +1,4 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react'
-import DrawingToolbar from './DrawingToolbar'
-import CanvasOptions from './CanvasOptions'
 import { useSprite } from '../contexts/SpriteContext'
 import { useEditor } from '../contexts/EditorContext'
 import { usePalette } from '../contexts/PaletteContext'
@@ -220,13 +218,6 @@ const SpriteCanvas: React.FC = () => {
     >
       {/* Background patterns */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#82aaff_1px,transparent_1px)] [background-size:16px_16px]" />
-      
-      <div className="absolute top-0 left-0 right-0 p-4 flex justify-center z-20 pointer-events-none">
-        <div className="flex flex-col items-center gap-4 pointer-events-auto">
-          <CanvasOptions />
-          <DrawingToolbar />
-        </div>
-      </div>
       
       <canvas
         ref={canvasRef}

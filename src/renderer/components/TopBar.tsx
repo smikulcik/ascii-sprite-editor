@@ -3,7 +3,11 @@ import { useTheme } from '../contexts/ThemeContext'
 import { useSprite } from '../contexts/SpriteContext'
 import { Sun, Moon, ChevronDown, Monitor, FileText, Settings, Layout, Layers, PlaySquare, Eye, Save, Plus, FolderOpen, SaveAll } from 'lucide-react'
 
-const TopBar: React.FC = () => {
+interface TopBarProps {
+  onShowOptions?: () => void;
+}
+
+const TopBar: React.FC<TopBarProps> = ({ onShowOptions }) => {
   const { theme, toggleTheme } = useTheme()
   const { filePath, isDirty, newFile, openFile, saveFile } = useSprite()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
@@ -60,9 +64,9 @@ const TopBar: React.FC = () => {
     return `${name}${isDirty ? ' *' : ''}`;
   };
 
-  const menuItems = [
+  const menuItems: { name: string; icon: React.ReactNode; disabled?: boolean }[] = [
     { name: 'File', icon: <FileText size={14} /> },
-    { name: 'Edit', icon: <Settings size={14} />, disabled: true },
+    { name: 'Edit', icon: <Settings size={14} /> },
     { name: 'View', icon: <Eye size={14} /> },
   ]
 
@@ -96,8 +100,8 @@ const TopBar: React.FC = () => {
             </button>
 
             {activeMenu === 'View' && item.name === 'View' && (
-              <div className="absolute top-full left-0 mt-1 w-56 bg-brand-surface border border-brand-border rounded-lg shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50">
-                <div className="p-2 border-b border-brand-border bg-brand-bg/30">
+              <div className="absolute top-full left-0 mt-1 w-56 bg-brand-surface border border-brand-border rounded-lg shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50 p-1">
+                <div className="p-2 border-b border-brand-border bg-brand-bg/30 rounded-t-lg">
                   <span className="text-[10px] font-bold text-brand-text/40 uppercase tracking-widest px-2">Appearance</span>
                 </div>
                 <div className="p-1">
@@ -124,15 +128,33 @@ const TopBar: React.FC = () => {
                   <span className="text-[10px] font-bold text-brand-text/40 uppercase tracking-widest px-2">Layout</span>
                 </div>
                 <div className="p-1 pb-2">
-                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm">
+                  <button 
+                    onClick={() => setActiveMenu(null)}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm"
+                  >
                     <Layout size={16} />
                     <span>Reset Layout</span>
                   </button>
-                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm">
+                  <button 
+                    onClick={() => setActiveMenu(null)}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm"
+                  >
                     <Layers size={16} />
                     <span>Toggle Overlays</span>
                   </button>
                 </div>
+              </div>
+            )}
+
+            {activeMenu === 'Edit' && item.name === 'Edit' && (
+              <div className="absolute top-full left-0 mt-1 w-48 bg-brand-surface border border-brand-border rounded-lg shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50 p-1 text-brand-text">
+                <button 
+                  onClick={() => { onShowOptions?.(); setActiveMenu(null); }}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left"
+                >
+                  <Settings size={14} />
+                  <span>Canvas Settings...</span>
+                </button>
               </div>
             )}
             

@@ -1,11 +1,21 @@
 import React from 'react'
-import { Pencil, Square, Type, Eraser, Bold as BoldIcon, Italic as ItalicIcon, Underline as UnderlineIcon, Strikethrough } from 'lucide-react'
+import { 
+  Pencil, Square, Type, Eraser, 
+  Bold as BoldIcon, Italic as ItalicIcon, 
+  Underline as UnderlineIcon, Strikethrough,
+  Palette as PaletteIcon,
+  ChevronDown
+} from 'lucide-react'
 import { useEditor } from '../contexts/EditorContext'
 import { useSprite } from '../contexts/SpriteContext'
-import { usePalette } from '../contexts/PaletteContext'
-import { Palette as PaletteIcon, ChevronDown } from 'lucide-react'
+import { usePalette, ANSI_COLOR_NAMES } from '../contexts/PaletteContext'
 
-const DrawingToolbar: React.FC = () => {
+interface DrawingToolbarProps {
+  onShowOptions?: () => void;
+  docked?: boolean;
+}
+
+const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ docked }) => {
   const { 
     activeTool, setActiveTool, 
     fgColor, setFgColor, 
@@ -20,290 +30,215 @@ const DrawingToolbar: React.FC = () => {
   const { setPaletteId } = useSprite()
   
   const [showPaletteMenu, setShowPaletteMenu] = React.useState(false)
-  const [showFgPicker, setShowFgPicker] = React.useState(false)
-  const [showBgPicker, setShowBgPicker] = React.useState(false)
 
-  const pickerRef = React.useRef<HTMLDivElement>(null)
-
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (pickerRef.current && !pickerRef.current.contains(event.target as Node)) {
-        setShowFgPicker(false)
-        setShowBgPicker(false)
-      }
+  const handleColorClick = (color: string, e: React.MouseEvent) => {
+    if (e.shiftKey) {
+      setBgColor(color)
+    } else {
+      setFgColor(color)
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+  }
+
+  const transparentOverlay = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'8\' height=\'8\' viewBox=\'0 0 8 8\'%3E%3Crect width=\'4\' height=\'4\' fill=\'%23ffffff\'/%3E%3Crect width=\'4\' height=\'4\' x=\'4\' y=\'4\' fill=\'%23ffffff\'/%3E%3Crect width=\'4\' height=\'4\' x=\'4\' fill=\'%23e5e5e5\'/%3E%3Crect width=\'4\' height=\'4\' y=\'4\' fill=\'%23e5e5e5\'/%3E%3C/svg%3E")';
+
+  const getUnicodeHex = (char: string) => {
+    if (!char) return 'U+----';
+    return `U+${char.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
+  }
+
+  const getColorName = (colorRef: string) => {
+    if (colorRef === 'transparent') return 'Trans';
+    if (colorRef === 'base:bg') return 'BG';
+    if (colorRef === 'base:fg') return 'FG';
+    if (colorRef.startsWith('ansi:')) {
+      const index = parseInt(colorRef.split(':')[1]);
+      const name = ANSI_COLOR_NAMES[index] || colorRef;
+      if (name === 'Bright Black (Gray)') return 'Gray';
+      return name.replace('Bright ', 'B.');
+    }
+    return colorRef;
+  };
 
   return (
-    <div className="bg-brand-surface/95 backdrop-blur-md border border-brand-border p-1.5 rounded-2xl shadow-2xl flex items-center gap-3">
-      {/* Tool Selection */}
-      <div className="flex bg-brand-bg/50 p-1 rounded-xl border border-brand-border/30">
-        <ToolButton 
-          active={activeTool === 'pencil'} 
-          onClick={() => setActiveTool('pencil')}
-          icon={<Pencil size={18} />} 
-          label="Pencil" 
-        />
-        <ToolButton 
-          active={activeTool === 'box'} 
-          onClick={() => setActiveTool('box')}
-          icon={<Square size={18} />} 
-          label="Box Tool" 
-        />
-        <ToolButton 
-          active={activeTool === 'type'} 
-          onClick={() => setActiveTool('type')}
-          icon={<Type size={18} />} 
-          label="Type Tool" 
-        />
-        <ToolButton 
-          active={activeTool === 'eraser'} 
-          onClick={() => setActiveTool('eraser')}
-          icon={<Eraser size={18} />} 
-          label="Eraser" 
-        />
-      </div>
-
-      <div className="w-px h-8 bg-brand-border/50" />
-
-      {/* Style Controls */}
-      <div className="flex items-center gap-4 px-1" ref={pickerRef}>
-        <div className="flex flex-col gap-1 items-center relative">
-          <div className="relative group">
-            <button 
-              onClick={() => setShowFgPicker(!showFgPicker)}
-              className="w-6 h-6 rounded-md border border-brand-border overflow-hidden bg-transparent shadow-sm transition-transform hover:scale-105"
-              style={{ backgroundColor: resolveColor(fgColor) }}
-            />
-            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-primary rounded-full opacity-0 group-hover:opacity-100" />
-            
-            {showFgPicker && (
-              <PaletteColorPicker 
-                onSelect={(val) => { setFgColor(val); setShowFgPicker(false); }} 
-                activeColor={fgColor}
-                resolveColor={resolveColor}
-                palette={activePalette}
-              />
-            )}
-          </div>
-          <div className="flex gap-1 mt-1">
-            <button 
-              onClick={() => setFgColor('base:fg')}
-              className={`w-3 h-3 rounded-full border border-brand-border shadow-sm transition-transform hover:scale-125 ${fgColor === 'base:fg' ? 'ring-1 ring-brand-primary' : ''}`}
-              style={{ backgroundColor: resolveColor('base:fg') }}
-              title="Reset to Base FG"
-            />
-            <span className="text-[8px] uppercase font-bold text-brand-text/40 tracking-tighter">FG</span>
-          </div>
+    <div className={`bg-brand-surface border-r border-brand-border flex flex-col items-center w-10 transition-all ${docked ? 'h-full border-l-0' : 'rounded-lg shadow-2xl overflow-hidden'}`}>
+      <div className="flex-1 w-full overflow-y-auto overflow-x-hidden p-0.5 flex flex-col items-center gap-1.5 scrollbar-thin scrollbar-thumb-brand-border/50 scrollbar-track-transparent scrollbar-gutter-stable scrollbar-hide-fullscreen pb-2">
+        {/* Tool Selection */}
+        <div className="flex flex-col gap-0.5 w-full bg-brand-bg/30 rounded border border-brand-border/20 shrink-0">
+          <ToolButton 
+            active={activeTool === 'pencil'} 
+            onClick={() => setActiveTool('pencil')}
+            icon={<Pencil size={18} />} 
+            label="Pencil" 
+            shortcut="P"
+          />
+          <ToolButton 
+            active={activeTool === 'box'} 
+            onClick={() => setActiveTool('box')}
+            icon={<Square size={18} />} 
+            label="Box" 
+            shortcut="B"
+          />
+          <ToolButton 
+            active={activeTool === 'type'} 
+            onClick={() => setActiveTool('type')}
+            icon={<Type size={18} />} 
+            label="Type" 
+            shortcut="T"
+          />
+          <ToolButton 
+            active={activeTool === 'eraser'} 
+            onClick={() => setActiveTool('eraser')}
+            icon={<Eraser size={18} />} 
+            label="Eraser" 
+            shortcut="E"
+          />
         </div>
 
-        <div className="flex flex-col gap-1 items-center relative">
-           <div className="relative group">
-            <button 
-              onClick={() => setShowBgPicker(!showBgPicker)}
-              className={`w-6 h-6 rounded-md border border-brand-border flex items-center justify-center transition-all overflow-hidden shadow-sm hover:scale-105 ${bgColor === 'transparent' ? 'bg-[url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAACpJREFUGFdtzMENADAIw8C9/6YDsAnKz8I6SkUBCgXpMv4KAtD7vO929S4YHgIEn+9LmgAAAABJRU5ErkJggg==")]' : ''}`}
-              style={{ backgroundColor: bgColor !== 'transparent' ? resolveColor(bgColor) : undefined }}
-            />
-            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-primary rounded-full opacity-0 group-hover:opacity-100" />
-            
-            {showBgPicker && (
-              <PaletteColorPicker 
-                onSelect={(val) => { setBgColor(val); setShowBgPicker(false); }} 
-                activeColor={bgColor}
-                resolveColor={resolveColor}
-                palette={activePalette}
-                allowTransparent
-              />
-            )}
-          </div>
-          <div className="flex gap-1 mt-1">
-            <button 
-              onClick={() => setBgColor('base:bg')}
-              className={`w-3 h-3 rounded-full border border-brand-border shadow-sm transition-transform hover:scale-125 ${bgColor === 'base:bg' ? 'ring-1 ring-brand-primary' : ''}`}
-              style={{ backgroundColor: resolveColor('base:bg') }}
-              title="Reset to Base BG"
-            />
-            <span className="text-[8px] uppercase font-bold text-brand-text/40 tracking-tighter">BG</span>
-          </div>
+        {/* Modifier Controls */}
+        <div className="flex flex-col gap-0.5 w-full bg-brand-bg/30 rounded border border-brand-border/20 shrink-0 items-center">
+          <ModifierButton active={bold} onClick={() => setBold(!bold)} icon={<BoldIcon size={18} />} label="Bold" />
+          <ModifierButton active={italic} onClick={() => setItalic(!italic)} icon={<ItalicIcon size={18} />} label="Italic" />
+          <ModifierButton active={underline} onClick={() => setUnderline(!underline)} icon={<UnderlineIcon size={18} />} label="Underline" />
+          <ModifierButton active={strikeThrough} onClick={() => setStrikeThrough(!strikeThrough)} icon={<Strikethrough size={18} />} label="Strike" />
         </div>
-      </div>
 
-      <div className="w-px h-8 bg-brand-border/50" />
+        {/* Character Input */}
+        <div className="flex flex-col gap-1 items-center shrink-0 w-full py-1 border-y border-brand-border/10">
+          <span className="text-[8px] uppercase font-black text-brand-text/40 tracking-tighter">Char</span>
+          <input 
+            type="text" 
+            maxLength={1} 
+            value={currentCharacter}
+            onChange={(e) => setCurrentCharacter(e.target.value)}
+            className="w-8 h-8 bg-brand-bg border border-brand-border/40 rounded text-center font-mono text-base focus:outline-none focus:ring-1 focus:ring-brand-primary transition-all text-brand-text shadow-sm"
+            placeholder="@"
+          />
+          <span className="text-[8px] font-mono font-bold text-brand-primary leading-none opacity-60">{getUnicodeHex(currentCharacter).replace('U+', '')}</span>
+        </div>
 
-      {/* Modifier Controls */}
-      <div className="flex gap-1 bg-brand-bg/50 p-1 rounded-xl">
-        <ModifierButton active={bold} onClick={() => setBold(!bold)} icon={<BoldIcon size={14} />} label="Bold" />
-        <ModifierButton active={italic} onClick={() => setItalic(!italic)} icon={<ItalicIcon size={14} />} label="Italic" />
-        <ModifierButton active={underline} onClick={() => setUnderline(!underline)} icon={<UnderlineIcon size={14} />} label="Underline" />
-        <ModifierButton active={strikeThrough} onClick={() => setStrikeThrough(!strikeThrough)} icon={<Strikethrough size={14} />} label="Strike" />
-      </div>
-
-      <div className="w-px h-8 bg-brand-border/50" />
-
-      {/* Character Input */}
-      <div className="flex gap-2 items-center bg-brand-bg/50 p-1 px-2 rounded-xl border border-brand-border/30">
-        <input 
-          type="text" 
-          maxLength={1} 
-          value={currentCharacter}
-          onChange={(e) => setCurrentCharacter(e.target.value)}
-          className="w-8 h-8 bg-brand-surface border border-brand-border rounded-lg text-center font-mono text-lg focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition-all text-brand-text placeholder-brand-text/20 shadow-inner"
-          placeholder="@"
-        />
-        <span className="text-[9px] uppercase font-bold text-brand-text/50 text-center leading-none">Primary<br/>Char</span>
-      </div>
-
-      <div className="w-px h-8 bg-brand-border/50" />
-
-      {/* Palette Selector */}
-      <div className="flex gap-1.5 items-center px-1">
-        <div className="grid grid-cols-8 gap-1">
-          {activePalette && activePalette.ansi.map((_, i) => (
-            <button
-              key={i}
-              onClick={(e) => {
-                if (e.shiftKey) setBgColor(`ansi:${i}`)
-                else setFgColor(`ansi:${i}`)
-              }}
-              className={`w-4 h-4 rounded-sm border border-brand-border/50 hover:scale-110 transition-transform shadow-sm relative group`}
-              style={{ backgroundColor: resolveColor(`ansi:${i}`) }}
-              title={`ANSI:${i}${fgColor === `ansi:${i}` ? ' (Selected FG)' : ''}${bgColor === `ansi:${i}` ? ' (Selected BG)' : ''}`}
+        {/* Color Indicators (Compact) */}
+        <div className="relative w-full flex flex-col items-center shrink-0 mb-1 mt-1 px-0.5">
+          <span className="text-[6px] font-mono font-bold text-brand-text/60 mb-1 uppercase text-center block w-full truncate leading-none">{getColorName(fgColor)}</span>
+          <div className="relative w-8 h-8">
+            {/* BG Color */}
+            <div 
+              className={`absolute bottom-0 right-0 w-6 h-6 rounded-sm border border-brand-border shadow-sm overflow-hidden bg-white`}
+              style={{ backgroundImage: transparentOverlay }}
+              title={`Background: ${getColorName(bgColor)}`}
             >
-              {(fgColor === `ansi:${i}` || bgColor === `ansi:${i}`) && (
-                <div className={`absolute inset-0 border-2 ${fgColor === `ansi:${i}` ? 'border-white' : 'border-white/50 border-dashed'} rounded-sm`} />
-              )}
-              <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-1 py-0.5 bg-brand-surface text-brand-text text-[8px] rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-mono z-50 border border-brand-border">
-                ANSI:{i}
-              </div>
-            </button>
-          ))}
-        </div>
-        
-        <div className="relative">
-          <button 
-            onClick={() => setShowPaletteMenu(!showPaletteMenu)}
-            className="flex items-center gap-1 px-2 py-1 bg-brand-bg/50 hover:bg-brand-surface border border-brand-border/30 rounded-lg transition-colors text-brand-text/60 hover:text-brand-text"
-          >
-            <PaletteIcon size={14} />
-            <span className="text-[9px] font-bold uppercase tracking-wider max-w-[60px] truncate">{activePalette?.name || 'Default'}</span>
-            <ChevronDown size={10} />
-          </button>
-          
-          {showPaletteMenu && (
-            <div className="absolute bottom-full right-0 mb-2 w-48 bg-brand-surface border border-brand-border rounded-xl shadow-2xl z-50 p-1 animate-in fade-in slide-in-from-bottom-2">
-              <div className="px-3 py-2 text-[10px] font-bold text-brand-text/40 uppercase tracking-widest border-bottom border-brand-border/30 mb-1">
-                Select Palette
-              </div>
-              {palettes.map((p: any) => (
-                <button
-                  key={p.id}
-                  onClick={() => {
-                    setActivePalette(p.id)
-                    setPaletteId(p.id)
-                    setShowPaletteMenu(false)
-                  }}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-colors ${activePalette?.id === p.id ? 'bg-brand-primary/10 text-brand-primary' : 'text-brand-text/60 hover:bg-brand-bg/50 hover:text-brand-text'}`}
-                >
-                  <span className="font-semibold">{p.name}</span>
-                  {activePalette?.id === p.id && <div className="w-1.5 h-1.5 bg-brand-primary rounded-full" />}
-                </button>
-              ))}
+              {bgColor !== 'transparent' && <div className="absolute inset-0" style={{ backgroundColor: resolveColor(bgColor) }} />}
             </div>
-          )}
+            {/* FG Color */}
+            <div 
+              className={`absolute top-0 left-0 w-6 h-6 rounded-sm border border-brand-primary shadow-md overflow-hidden bg-white z-10`}
+              style={{ backgroundImage: transparentOverlay }}
+              title={`Foreground: ${getColorName(fgColor)}`}
+            >
+              {fgColor !== 'transparent' && <div className="absolute inset-0" style={{ backgroundColor: resolveColor(fgColor) }} />}
+            </div>
+          </div>
+          <span className="text-[6px] font-mono font-bold text-brand-text/60 mt-1 uppercase text-center block w-full truncate leading-none">{getColorName(bgColor)}</span>
+        </div>
+
+        {/* Palette Selector Section */}
+        <div className="flex flex-col items-center gap-1 w-full shrink-0">
+          {/* Palette Dropdown Move to Top */}
+          <div className="relative w-full flex justify-center">
+            <button 
+              onClick={() => setShowPaletteMenu(!showPaletteMenu)}
+              className="w-full h-8 flex items-center justify-center bg-brand-bg/40 hover:bg-brand-surface border border-brand-border/20 rounded transition-all text-brand-primary hover:text-white"
+            >
+              <PaletteIcon size={16} />
+            </button>
+            
+            {showPaletteMenu && (
+              <div className={`absolute left-full top-0 ml-1 w-48 bg-brand-surface border border-brand-border rounded-lg shadow-2xl z-50 p-1 animate-in fade-in slide-in-from-left-2 border-l-2 border-l-brand-primary`}>
+                <div className="px-2 py-1 text-[9px] font-black text-brand-text/40 uppercase tracking-widest border-b border-brand-border/20 mb-1">
+                  Palettes
+                </div>
+                {palettes.map((p: any) => (
+                  <button
+                    key={p.id}
+                    onClick={() => {
+                      setActivePalette(p.id)
+                      setPaletteId(p.id)
+                      setShowPaletteMenu(false)
+                    }}
+                    className={`w-full flex items-center justify-between px-2 py-1.5 rounded transition-all ${activePalette?.id === p.id ? 'bg-brand-primary/10 text-brand-primary font-bold' : 'text-brand-text/60 hover:bg-brand-bg/80 hover:text-brand-text'} text-xs`}
+                  >
+                    <span className="truncate pr-1">{p.name}</span>
+                    {activePalette?.id === p.id && <div className="w-1.5 h-1.5 bg-brand-primary rounded-full" />}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="w-full h-px bg-brand-border/10 shrink-0" />
+
+          {/* Special colors (Transparent only) */}
+          <div className="w-full flex justify-center p-0.5">
+            <button
+              onClick={(e) => handleColorClick('transparent', e)}
+              className="w-6 h-6 rounded border border-brand-border hover:scale-110 transition-all shadow-sm relative overflow-hidden group bg-white"
+              style={{ backgroundImage: transparentOverlay }}
+              title="Transparent (Click: FG, Shift-Click: BG)"
+            >
+              {(fgColor === 'transparent' || bgColor === 'transparent') && (
+                <div className={`absolute inset-0 border-2 ${fgColor === 'transparent' ? 'border-brand-primary' : 'border-white/40 border-dashed'} rounded-sm z-10`} />
+              )}
+            </button>
+          </div>
+
+          <div className="w-full h-px bg-brand-border/10 shrink-0" />
+
+          {/* ANSI Grid (2x8) */}
+          <div className="grid grid-cols-2 gap-1 p-0.5 bg-brand-bg/20 rounded border border-brand-border/10">
+            {activePalette && activePalette.ansi.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => handleColorClick(`ansi:${i}`, e)}
+                className={`w-4 h-4 rounded-sm border border-brand-border/40 hover:scale-110 transition-all shadow-sm relative group`}
+                style={{ backgroundColor: resolveColor(`ansi:${i}`) }}
+                title={`${ANSI_COLOR_NAMES[i]}`}
+              >
+                {(fgColor === `ansi:${i}` || bgColor === `ansi:${i}`) && (
+                  <div className={`absolute inset-0 border-2 ${fgColor === `ansi:${i}` ? 'border-white' : 'border-white/40 border-dashed'} rounded-sm z-10`} />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-const ToolButton: React.FC<{ active?: boolean, icon: React.ReactNode, label: string, onClick: () => void }> = ({ active, icon, label, onClick }) => (
+const ToolButton: React.FC<{ active?: boolean, icon: React.ReactNode, label: string, shortcut?: string, onClick: () => void }> = ({ active, icon, label, shortcut, onClick }) => (
   <button 
     onClick={onClick}
-    className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all relative group
-    ${active ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105 z-10' : 'text-brand-text/40 hover:bg-brand-surface hover:text-brand-text'}
+    className={`w-9 h-9 flex items-center justify-center rounded-sm transition-all relative group shrink-0
+    ${active ? 'bg-brand-primary text-white shadow-md z-10' : 'text-brand-text/40 hover:bg-brand-surface hover:text-brand-text'}
   `}>
     {icon}
-    <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-brand-surface text-brand-text text-[10px] rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 shadow-xl border border-brand-border font-bold">
-      {label}
-    </span>
+    <div className="absolute left-full ml-2 px-2 py-1 bg-brand-surface border border-brand-border text-brand-text text-[9px] rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-all whitespace-nowrap z-50 shadow-xl font-bold uppercase tracking-wider translate-x-1 group-hover:translate-x-0 flex gap-2 items-center">
+      <span>{label}</span>
+      {shortcut && <span className="bg-brand-primary text-white px-1 py-0.5 rounded font-mono text-[8px] shadow-sm">{shortcut}</span>}
+    </div>
   </button>
 )
 
 const ModifierButton: React.FC<{ active?: boolean, icon: React.ReactNode, label: string, onClick: () => void }> = ({ active, icon, label, onClick }) => (
   <button 
     onClick={onClick}
-    className={`w-8 h-8 flex items-center justify-center rounded-lg border transition-all relative group
-    ${active ? 'bg-brand-primary/20 border-brand-primary text-brand-primary shadow-inner' : 'border-transparent text-brand-text/40 hover:bg-brand-surface hover:text-brand-text'}
+    className={`w-9 h-9 flex items-center justify-center rounded-sm border transition-all relative group shrink-0
+    ${active ? 'bg-brand-primary/20 border-brand-primary text-brand-primary shadow-inner' : 'border-transparent text-brand-text/30 hover:bg-brand-surface hover:text-brand-text'}
   `}>
     {icon}
-    <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-brand-surface text-brand-text text-[10px] rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 shadow-xl border border-brand-border font-bold">
+    <div className="absolute left-full ml-2 px-2 py-1 bg-brand-surface border border-brand-border text-brand-text text-[9px] rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-all whitespace-nowrap z-50 shadow-xl font-bold uppercase tracking-wider translate-x-1 group-hover:translate-x-0">
       {label}
-    </span>
+    </div>
   </button>
-)
-
-const PaletteColorPicker: React.FC<{ 
-  onSelect: (color: string) => void, 
-  activeColor: string, 
-  resolveColor: (c: string) => string,
-  palette: any,
-  allowTransparent?: boolean
-}> = ({ onSelect, activeColor, resolveColor, palette, allowTransparent }) => (
-  <div className="absolute bottom-full left-0 mb-2 p-2 bg-brand-surface border border-brand-border rounded-xl shadow-2xl z-50 animate-in fade-in slide-in-from-bottom-2 w-[160px]">
-    <div className="grid grid-cols-4 gap-2 mb-2">
-      {palette?.ansi.map((_: string, i: number) => (
-        <button
-          key={i}
-          onClick={() => onSelect(`ansi:${i}`)}
-          className={`w-6 h-6 rounded border border-brand-border/50 transition-all hover:scale-110 relative ${activeColor === `ansi:${i}` ? 'ring-2 ring-brand-primary ring-offset-1 ring-offset-brand-surface' : ''}`}
-          style={{ backgroundColor: resolveColor(`ansi:${i}`) }}
-          title={`ANSI:${i}`}
-        />
-      ))}
-    </div>
-    
-    <div className="w-full h-px bg-brand-border/50 my-2" />
-    
-    <div className="flex flex-col gap-1.5">
-      <button 
-        onClick={() => onSelect('base:fg')}
-        className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-colors ${activeColor === 'base:fg' ? 'bg-brand-primary/20 text-brand-primary border border-brand-primary/30' : 'hover:bg-brand-bg/50 text-brand-text/60'}`}
-      >
-        <div className="w-3 h-3 rounded-full border border-brand-border" style={{ backgroundColor: resolveColor('base:fg') }} />
-        <span>Base FG</span>
-      </button>
-      <button 
-        onClick={() => onSelect('base:bg')}
-        className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-colors ${activeColor === 'base:bg' ? 'bg-brand-primary/20 text-brand-primary border border-brand-primary/30' : 'hover:bg-brand-bg/50 text-brand-text/60'}`}
-      >
-        <div className="w-3 h-3 rounded-full border border-brand-border" style={{ backgroundColor: resolveColor('base:bg') }} />
-        <span>Base BG</span>
-      </button>
-      
-      {allowTransparent && (
-        <button 
-          onClick={() => onSelect('transparent')}
-          className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-colors ${activeColor === 'transparent' ? 'bg-brand-primary/20 text-brand-primary border border-brand-primary/30' : 'hover:bg-brand-bg/50 text-brand-text/60'}`}
-        >
-          <div className="w-3 h-3 rounded-full border border-brand-border bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAACpJREFUGFdtzMENADAIw8C9/6YDsAnKz8I6SkUBCgXpMv4KAtD7vO929S4YHgIEn+9LmgAAAABJRU5ErkJggg==')]" />
-          <span>Transparent</span>
-        </button>
-      )}
-
-      <div className="relative mt-1 group/input">
-        <input 
-          type="color" 
-          value={activeColor.startsWith('#') ? activeColor : resolveColor(activeColor)}
-          onChange={(e) => onSelect(e.target.value)}
-          className="w-full h-6 rounded border border-brand-border cursor-pointer bg-transparent"
-        />
-        <div className="absolute inset-x-0 -bottom-1 h-px bg-brand-primary scale-x-0 group-hover/input:scale-x-100 transition-transform" />
-        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[8px] text-white/40 pointer-events-none font-mono">HEX</span>
-      </div>
-    </div>
-  </div>
 )
 
 export default DrawingToolbar

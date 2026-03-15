@@ -82,3 +82,20 @@ body {
   background: var(--detail);
   opacity: 0.5;
 }
+
+.scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
+.scrollbar-hide-fullscreen {
+  scrollbar-width: thin;
+}
+
+@media (display-mode: fullscreen) {
+  .scrollbar-hide-fullscreen::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide-fullscreen {
+    scrollbar-width: none;
+  }
+}
