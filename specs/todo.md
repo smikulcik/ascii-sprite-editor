@@ -38,6 +38,7 @@ we queue them up for the agent to start work on
 - [x] Put it under File > Export
 - [x] When you click it, show a modal with options
   - [x] Export as gif
+  - [x] Export as bash script animation
   - [x] Export as sprite sheet png + coords for game engine import (JSON?)
 
 ## Timeline (Completed)

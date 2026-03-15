@@ -12,6 +12,7 @@ const api = {
     saveAs: (spriteData: any) => ipcRenderer.invoke('sprite:save-as', spriteData),
     saveSilent: (path: string, spriteData: any) => ipcRenderer.invoke('sprite:save-silent', path, spriteData),
     saveGif: (buffer: ArrayBuffer) => ipcRenderer.invoke('sprite:save-gif', buffer),
+    saveBash: (script: string) => ipcRenderer.invoke('sprite:save-bash', script),
     onSaveRequest: (callback: () => void) => 
         ipcRenderer.on('sprite:save-request', () => callback()),
     removeSaveRequestListeners: () => 

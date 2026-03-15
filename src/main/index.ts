@@ -266,3 +266,23 @@ ipcMain.handle('sprite:save-gif', async (_event, buffer: ArrayBuffer) => {
     }
     return null
 })
+
+ipcMain.handle('sprite:save-bash', async (_event, script: string) => {
+    const focusedWindow = BrowserWindow.getFocusedWindow();
+    const result = await dialog.showSaveDialog(focusedWindow!, {
+        title: 'Export Bash',
+        defaultPath: 'animation.sh',
+        filters: [{ name: 'Bash Scripts', extensions: ['sh'] }]
+    })
+
+    if (!result.canceled && result.filePath) {
+        try {
+            writeFileSync(result.filePath, script, { encoding: 'utf8', mode: 0o755 })
+            return result.filePath
+        } catch (error) {
+            console.error('Failed to export Bash script:', error)
+            return null
+        }
+    }
+    return null
+})
