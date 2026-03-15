@@ -1,0 +1,2436 @@
+{
+  "width": 20,
+  "height": 10,
+  "paletteId": "nordic-aurora",
+  "fps": 3,
+  "frames": [
+    [
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "A",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "n",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "i",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "m",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "a",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "t",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "e",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "d",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "A",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "S",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "C",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "I",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "I",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "S",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "p",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "r",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "i",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "t",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "e",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "E",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "D",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "I",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "T",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "O",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "R",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "!",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    ],
+    [
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "A",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "n",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "i",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "m",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "a",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "t",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "e",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "d",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "A",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "S",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "C",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "I",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "I",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "bold",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:5",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "S",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "p",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "r",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "i",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "t",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "e",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:2",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "E",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "D",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "I",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "T",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "O",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "R",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": "!",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": true,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:4",
+          "bg_color": "ansi:11",
+          "weight": "normal",
+          "italic": false,
+          "underline": true,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": " ",
+          "fg_color": "ansi:8",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        {
+          "value": "*",
+          "fg_color": "ansi:11",
+          "bg_color": "ansi:8",
+          "weight": "normal",
+          "italic": false,
+          "underline": false,
+          "strike_through": false
+        },
+        null,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    ]
+  ]
+}

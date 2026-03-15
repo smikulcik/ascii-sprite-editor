@@ -1,4 +1,7 @@
-# ASCII Sprite Editor
+# _Animated_ ASCII Sprite Editor
+
+![Animated ASCII Sprite Editor](./ascii-sprite-editor-logo.gif)
+
 
 A modern, desktop-based ASCII art animation editor built with Electron, TypeScript, and Vite. Refactored for robust performance and a type-safe developer experience.
 
