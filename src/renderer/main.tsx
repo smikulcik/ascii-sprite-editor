@@ -5,15 +5,18 @@ import './index.css'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { SpriteProvider } from './contexts/SpriteContext'
 import { EditorProvider } from './contexts/EditorContext'
+import { PaletteProvider } from './contexts/PaletteContext'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider>
-      <SpriteProvider>
-        <EditorProvider>
-          <App />
-        </EditorProvider>
-      </SpriteProvider>
+      <PaletteProvider>
+        <SpriteProvider>
+          <EditorProvider>
+            <App />
+          </EditorProvider>
+        </SpriteProvider>
+      </PaletteProvider>
     </ThemeProvider>
   </React.StrictMode>
 )

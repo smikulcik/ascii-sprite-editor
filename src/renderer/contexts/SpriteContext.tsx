@@ -9,6 +9,7 @@ interface SpriteContextType {
   currentFrameIndex: number;
   activeCell: { row: number; col: number } | null;
   selection: { start: { row: number; col: number }; end: { row: number; col: number } } | null;
+  paletteId: string;
   
   // Actions
   updateCell: (row: number, col: number, data: Cell | null) => void;
@@ -17,6 +18,7 @@ interface SpriteContextType {
   deleteFrame: (index: number) => void;
   resize: (width: number, height: number) => void;
   setActiveCell: (cell: { row: number; col: number } | null) => void;
+  setPaletteId: (id: string) => void;
   
   // Editor State
   zoom: number;
@@ -40,6 +42,7 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [currentFrameIndex, setCurrentFrameIndex] = useState(sprite.curFrame);
   const [activeCell, setActiveCell] = useState<{ row: number; col: number } | null>({ row: 0, col: 0 });
   const [selection] = useState<{ start: { row: number; col: number }; end: { row: number; col: number } } | null>(null);
+  const [paletteId, setPaletteIdState] = useState(sprite.paletteId);
   
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 50, y: 50 });
@@ -50,6 +53,7 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setHeight(sprite.height);
     setFrames([...sprite.frames]);
     setCurrentFrameIndex(sprite.curFrame);
+    setPaletteIdState(sprite.paletteId);
   }, [sprite]);
 
   useEffect(() => {
@@ -82,6 +86,11 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     refreshState();
   };
 
+  const setPaletteId = (id: string) => {
+    sprite.paletteId = id;
+    setPaletteIdState(id);
+  };
+
   const play = (fps: number = 12) => {
     sprite.play(1000 / fps);
   };
@@ -106,6 +115,8 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       deleteFrame,
       resize,
       setActiveCell,
+      paletteId,
+      setPaletteId,
       zoom,
       setZoom,
       offset,

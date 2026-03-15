@@ -16,6 +16,7 @@ export class Sprite {
     height: number = 10;
     frames: Frame[] = [];
     curFrame: number = 0;
+    paletteId: string = 'nordic-aurora';
     animator: NodeJS.Timeout | null = null;
     onDraw: () => void = () => { };
 
@@ -67,7 +68,8 @@ export class Sprite {
         offset_x: number,
         offset_y: number,
         cell_width: number,
-        cell_height: number
+        cell_height: number,
+        resolveColor: (color: string) => string = (c) => c
     ): void {
         const frame = this.frames[frame_idx];
         if (!frame) return;
@@ -79,9 +81,12 @@ export class Sprite {
                     const x = offset_x + j * cell_width;
                     const y = offset_y + i * cell_height;
 
+                    const resolvedBg = resolveColor(cell.bg_color);
+                    const resolvedFg = resolveColor(cell.fg_color);
+
                     // Draw background
-                    if (cell.bg_color && cell.bg_color !== 'transparent') {
-                        context.fillStyle = cell.bg_color;
+                    if (resolvedBg && resolvedBg !== 'transparent') {
+                        context.fillStyle = resolvedBg;
                         context.fillRect(x, y, cell_width, cell_height);
                     }
 
@@ -96,7 +101,7 @@ export class Sprite {
                     context.textAlign = 'center';
 
                     // Draw text
-                    context.fillStyle = cell.fg_color === 'transparent' ? 'rgba(0,0,0,0)' : cell.fg_color;
+                    context.fillStyle = resolvedFg === 'transparent' ? 'rgba(0,0,0,0)' : resolvedFg;
                     context.fillText(cell.value, x + cell_width / 2, y + cell_height / 2);
 
                     // Underline
@@ -104,7 +109,7 @@ export class Sprite {
                         context.beginPath();
                         context.moveTo(x + 2, y + cell_height - 2);
                         context.lineTo(x + cell_width - 2, y + cell_height - 2);
-                        context.strokeStyle = cell.fg_color;
+                        context.strokeStyle = resolvedFg;
                         context.lineWidth = 1;
                         context.stroke();
                     }
@@ -114,7 +119,7 @@ export class Sprite {
                         context.beginPath();
                         context.moveTo(x + 2, y + cell_height / 2);
                         context.lineTo(x + cell_width - 2, y + cell_height / 2);
-                        context.strokeStyle = cell.fg_color;
+                        context.strokeStyle = resolvedFg;
                         context.lineWidth = 1;
                         context.stroke();
                     }

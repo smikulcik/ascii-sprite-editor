@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { Plus, Trash2, Copy } from 'lucide-react'
 import { useSprite } from '../contexts/SpriteContext'
+import { usePalette } from '../contexts/PaletteContext'
 import { Frame } from '../sprite'
 
 const FrameSidebar: React.FC = () => {
@@ -46,6 +47,7 @@ interface FrameItemProps {
 
 const FrameItem: React.FC<FrameItemProps> = ({ frame, index, isActive, onClick, onDelete, sprite }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { resolveColor } = usePalette()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -67,8 +69,8 @@ const FrameItem: React.FC<FrameItemProps> = ({ frame, index, isActive, onClick, 
     const offsetY = (canvas.height - sprite.height * cellH) / 2
 
     // Use a simplified draw for preview
-    sprite.draw(ctx, index, offsetX, offsetY, cellW, cellH)
-  }, [frame, sprite, index])
+    sprite.draw(ctx, index, offsetX, offsetY, cellW, cellH, resolveColor)
+  }, [frame, sprite, index, resolveColor])
 
   return (
     <div 

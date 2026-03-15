@@ -3,12 +3,14 @@ import DrawingToolbar from './DrawingToolbar'
 import CanvasOptions from './CanvasOptions'
 import { useSprite } from '../contexts/SpriteContext'
 import { useEditor } from '../contexts/EditorContext'
+import { usePalette } from '../contexts/PaletteContext'
 
 const SpriteCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const { sprite, width, height, currentFrameIndex, activeCell, setActiveCell, updateCell, zoom, setZoom, offset, setOffset } = useSprite()
   const { activeTool, fgColor, bgColor, currentCharacter, bold, italic, underline, strikeThrough } = useEditor()
+  const { resolveColor } = usePalette()
   
   const [isPanning, setIsPanning] = useState(false)
   const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
@@ -41,7 +43,7 @@ const SpriteCanvas: React.FC = () => {
     }
 
     // Draw Sprite
-    sprite.draw(ctx, currentFrameIndex, offset.x, offset.y, cellWidth, cellHeight)
+    sprite.draw(ctx, currentFrameIndex, offset.x, offset.y, cellWidth, cellHeight, resolveColor)
 
     // Draw active cell highlight
     if (activeCell) {

@@ -1,8 +1,14 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { exposeElectronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
-const api = {}
+const api = {
+    onPaletteImported: (callback: (palette: any) => void) => 
+        ipcRenderer.on('palette:imported', (_event, value) => callback(value)),
+    removePaletteListeners: () => 
+        ipcRenderer.removeAllListeners('palette:imported'),
+    importTerminalProfile: () => ipcRenderer.send('palette:import-request')
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
@@ -16,7 +22,5 @@ if (process.contextIsolated) {
     }
 } else {
     // @ts-ignore (define in d.ts)
-    window.electron = electronAPI
-    // @ts-ignore (define in d.ts)
-    window.api = api
+    (window as any).api = api
 }

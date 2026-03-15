@@ -1,4 +1,6 @@
-import { app, shell, BrowserWindow, Menu } from 'electron'
+import { app, shell, BrowserWindow, Menu, dialog, ipcMain } from 'electron'
+import { readFileSync } from 'fs'
+import { parseTerminalProfile } from './utils/paletteParser'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
@@ -70,7 +72,27 @@ app.whenReady().then(() => {
             : []),
         {
             label: 'File',
-            submenu: [isMac ? { role: 'close' } : { role: 'quit' }]
+            submenu: [
+                {
+                    label: 'Import Terminal Profile...',
+                    click: async (): Promise<void> => {
+                        const result = await dialog.showOpenDialog({
+                            properties: ['openFile'],
+                            filters: [{ name: 'Terminal Profiles', extensions: ['terminal'] }]
+                        })
+
+                        if (!result.canceled && result.filePaths.length > 0) {
+                            const content = readFileSync(result.filePaths[0], 'utf8')
+                            const palette = parseTerminalProfile(content)
+                            if (palette) {
+                                BrowserWindow.getFocusedWindow()?.webContents.send('palette:imported', palette)
+                            }
+                        }
+                    }
+                },
+                { type: 'separator' },
+                isMac ? { role: 'close' } : { role: 'quit' }
+            ]
         },
         {
             label: 'Edit',
@@ -144,5 +166,20 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
+    }
+})
+
+ipcMain.on('palette:import-request', async (event) => {
+    const result = await dialog.showOpenDialog({
+        properties: ['openFile'],
+        filters: [{ name: 'Terminal Profiles', extensions: ['terminal'] }]
+    })
+
+    if (!result.canceled && result.filePaths.length > 0) {
+        const content = readFileSync(result.filePaths[0], 'utf8')
+        const palette = parseTerminalProfile(content)
+        if (palette) {
+            event.reply('palette:imported', palette)
+        }
     }
 })

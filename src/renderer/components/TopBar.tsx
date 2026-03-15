@@ -99,6 +99,15 @@ const TopBar: React.FC = () => {
                   <span>Open...</span>
                 </button>
                 <div className="my-1 border-t border-brand-border" />
+                <button 
+                  onClick={() => {
+                    (window as any).api?.importTerminalProfile();
+                    setActiveMenu(null);
+                  }}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left"
+                >
+                  <span>Import Terminal Profile...</span>
+                </button>
                 <button className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left">
                   <span>Save</span>
                 </button>
