@@ -19,7 +19,7 @@ interface PaletteContextType {
 const NORDIC_AURORA: Palette = {
   id: 'nordic-aurora',
   name: 'Nordic Aurora',
-  backgroundColor: '#0F111A',
+  backgroundColor: 'transparent',
   textColor: '#A6ACCD',
   ansi: [
     '#0F111A', '#F07178', '#C3E88D', '#FFCB6B', '#82AAFF', '#C792EA', '#89DDFF', '#A6ACCD',
@@ -30,7 +30,7 @@ const NORDIC_AURORA: Palette = {
 const BLUEPRINT: Palette = {
   id: 'blueprint',
   name: 'Blueprint',
-  backgroundColor: '#fafafa',
+  backgroundColor: 'transparent',
   textColor: '#111827',
   ansi: [
     '#000000', '#dc2626', '#16a34a', '#ca8a04', '#2563eb', '#9333ea', '#0891b2', '#4b5563',
@@ -46,7 +46,7 @@ export const ANSI_COLOR_NAMES = [
 const VGA_CONSOLE: Palette = {
   id: 'vga-console',
   name: 'VGA Console',
-  backgroundColor: '#000000',
+  backgroundColor: 'transparent',
   textColor: '#C4C4C4',
   ansi: [
     '#000000', '#C40000', '#00C400', '#C47E00', '#0000C4', '#C400C4', '#00C4C4', '#C4C4C4',
@@ -57,7 +57,7 @@ const VGA_CONSOLE: Palette = {
 const XTERM: Palette = {
   id: 'xterm',
   name: 'xterm',
-  backgroundColor: '#000000',
+  backgroundColor: 'transparent',
   textColor: '#FFFFFF',
   ansi: [
     '#000000', '#CD0000', '#00CD00', '#CDCD00', '#0000EE', '#CD00CD', '#00CDCD', '#E5E5E5',
@@ -68,7 +68,7 @@ const XTERM: Palette = {
 const WINDOWS_10: Palette = {
   id: 'windows-10',
   name: 'Windows 10',
-  backgroundColor: '#0C0C0C',
+  backgroundColor: 'transparent',
   textColor: '#CCCCCC',
   ansi: [
     '#0C0C0C', '#C50F1F', '#13A10E', '#C19C00', '#0037DA', '#881798', '#3A96DD', '#CCCCCC',
