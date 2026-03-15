@@ -148,4 +148,22 @@ export class Sprite {
             this.animator = null;
         }
     }
+
+    serialize(): any {
+        return {
+            width: this.width,
+            height: this.height,
+            paletteId: this.paletteId,
+            frames: this.frames
+        };
+    }
+
+    load(data: any): void {
+        this.width = data.width || 20;
+        this.height = data.height || 10;
+        this.paletteId = data.paletteId || 'nordic-aurora';
+        this.frames = data.frames || [this.newFrame()];
+        this.curFrame = 0;
+        this.onDraw();
+    }
 }

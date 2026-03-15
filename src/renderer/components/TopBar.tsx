@@ -1,11 +1,43 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
-import { Sun, Moon, ChevronDown, Monitor, FileText, Settings, Layout, Layers, PlaySquare, Eye } from 'lucide-react'
+import { useSprite } from '../contexts/SpriteContext'
+import { Sun, Moon, ChevronDown, Monitor, FileText, Settings, Layout, Layers, PlaySquare, Eye, Save, Plus, FolderOpen, SaveAll } from 'lucide-react'
 
 const TopBar: React.FC = () => {
   const { theme, toggleTheme } = useTheme()
+  const { filePath, isDirty, newFile, openFile, saveFile } = useSprite()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+
+  const handleNew = () => {
+    if (isDirty && !confirm('You have unsaved changes. Create new file anyway?')) return;
+    newFile();
+    setActiveMenu(null);
+  }
+
+  const handleOpen = async () => {
+    if (isDirty && !confirm('You have unsaved changes. Open file anyway?')) return;
+    const result = await (window as any).api?.openDialog();
+    if (result) {
+      openFile(result.path, result.content);
+    }
+    setActiveMenu(null);
+  }
+
+  const handleSave = async (silent: boolean = true) => {
+    console.log('Renderer: Attempting to save sprite', silent ? '(silent)' : '(Save As)');
+    try {
+      const success = await saveFile(silent);
+      if (success) {
+        console.log('Renderer: Sprite saved successfully');
+      } else {
+        console.warn('Renderer: Sprite save was cancelled or failed');
+      }
+    } catch (error) {
+      console.error('Renderer: Error during save:', error);
+    }
+    setActiveMenu(null);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -16,6 +48,17 @@ const TopBar: React.FC = () => {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+  
+  useEffect(() => {
+    const onSave = () => handleSave(true);
+    (window as any).api?.onSaveRequest(onSave);
+    return () => (window as any).api?.removeSaveRequestListeners();
+  }, [handleSave]);
+
+  const getTitle = () => {
+    const name = filePath ? filePath.split('/').pop() : 'Untitled';
+    return `${name}${isDirty ? ' *' : ''}`;
+  };
 
   const menuItems = [
     { name: 'File', icon: <FileText size={14} /> },
@@ -29,7 +72,10 @@ const TopBar: React.FC = () => {
         <div className="w-8 h-8 bg-brand-primary rounded flex items-center justify-center font-bold text-lg shadow-brand-primary/20 shadow-lg text-white">
           A
         </div>
-        <h1 className="font-bold tracking-tight text-brand-text">ASCII Sprite</h1>
+        <div className="flex flex-col">
+          <h1 className="font-bold tracking-tight text-brand-text leading-none">ASCII Sprite</h1>
+          <span className="text-[10px] text-brand-text/50 font-mono mt-0.5">{getTitle()}</span>
+        </div>
       </div>
       
       <nav className="flex items-center gap-1" ref={menuRef}>
@@ -92,10 +138,18 @@ const TopBar: React.FC = () => {
             
             {activeMenu === 'File' && item.name === 'File' && (
               <div className="absolute top-full left-0 mt-1 w-48 bg-brand-surface border border-brand-border rounded-lg shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50 p-1">
-                <button className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left">
+                <button 
+                  onClick={handleNew}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left"
+                >
+                  <Plus size={14} />
                   <span>New Sprite</span>
                 </button>
-                <button className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left">
+                <button 
+                  onClick={handleOpen}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left"
+                >
+                  <FolderOpen size={14} />
                   <span>Open...</span>
                 </button>
                 <div className="my-1 border-t border-brand-border" />
@@ -106,10 +160,25 @@ const TopBar: React.FC = () => {
                   }}
                   className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left"
                 >
+                  <FileText size={14} />
                   <span>Import Terminal Profile...</span>
                 </button>
-                <button className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left">
-                  <span>Save</span>
+                <button 
+                  onClick={() => handleSave(true)}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left"
+                >
+                  <Save size={14} />
+                  <div className="flex-1 flex items-center justify-between">
+                    <span>Save</span>
+                    <span className="text-[10px] opacity-40">⌘S</span>
+                  </div>
+                </button>
+                <button 
+                  onClick={() => handleSave(false)}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left"
+                >
+                  <SaveAll size={14} />
+                  <span>Save As...</span>
                 </button>
               </div>
             )}

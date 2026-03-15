@@ -10,6 +10,8 @@ interface SpriteContextType {
   activeCell: { row: number; col: number } | null;
   selection: { start: { row: number; col: number }; end: { row: number; col: number } } | null;
   paletteId: string;
+  filePath: string | null;
+  isDirty: boolean;
   
   // Actions
   updateCell: (row: number, col: number, data: Cell | null) => void;
@@ -19,6 +21,9 @@ interface SpriteContextType {
   resize: (width: number, height: number) => void;
   setActiveCell: (cell: { row: number; col: number } | null) => void;
   setPaletteId: (id: string) => void;
+  newFile: () => void;
+  openFile: (path: string, content: any) => void;
+  saveFile: (silent?: boolean) => Promise<boolean>;
   
   // Editor State
   zoom: number;
@@ -43,6 +48,8 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [activeCell, setActiveCell] = useState<{ row: number; col: number } | null>({ row: 0, col: 0 });
   const [selection] = useState<{ start: { row: number; col: number }; end: { row: number; col: number } } | null>(null);
   const [paletteId, setPaletteIdState] = useState(sprite.paletteId);
+  const [filePath, setFilePath] = useState<string | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
   
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 50, y: 50 });
@@ -63,6 +70,7 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const updateCell = (row: number, col: number, data: Cell | null) => {
     sprite.setCell(row, col, data);
+    setIsDirty(true);
     refreshState();
   };
 
@@ -73,22 +81,60 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const addFrame = () => {
     sprite.insertFrame();
+    setIsDirty(true);
     refreshState();
   };
 
   const deleteFrame = (index: number) => {
     sprite.deleteFrame(index);
+    setIsDirty(true);
     refreshState();
   };
 
   const resize = (w: number, h: number) => {
     sprite.resize(w, h);
+    setIsDirty(true);
     refreshState();
   };
 
   const setPaletteId = (id: string) => {
     sprite.paletteId = id;
+    setIsDirty(true);
     setPaletteIdState(id);
+  };
+
+  const newFile = () => {
+    sprite.load({ width: 20, height: 10, frames: null, paletteId: 'nordic-aurora' });
+    setFilePath(null);
+    setIsDirty(false);
+    refreshState();
+  };
+
+  const openFile = (path: string, content: any) => {
+    sprite.load(content);
+    setFilePath(path);
+    setIsDirty(false);
+    refreshState();
+  };
+
+  const saveFile = async (silent: boolean = false): Promise<boolean> => {
+    const data = sprite.serialize();
+    let result: { success: boolean, path: string | null };
+    
+    if (silent && filePath) {
+      const success = await (window as any).api.saveSilent(filePath, data);
+      result = { success, path: filePath };
+    } else {
+      const path = await (window as any).api.saveAs(data);
+      result = { success: !!path, path };
+    }
+
+    if (result.success && result.path) {
+      setFilePath(result.path);
+      setIsDirty(false);
+      return true;
+    }
+    return false;
   };
 
   const play = (fps: number = 12) => {
@@ -117,6 +163,11 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       setActiveCell,
       paletteId,
       setPaletteId,
+      filePath,
+      isDirty,
+      newFile,
+      openFile,
+      saveFile,
       zoom,
       setZoom,
       offset,

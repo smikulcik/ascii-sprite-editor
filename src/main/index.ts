@@ -1,5 +1,5 @@
 import { app, shell, BrowserWindow, Menu, dialog, ipcMain } from 'electron'
-import { readFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { parseTerminalProfile } from './utils/paletteParser'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
@@ -88,6 +88,13 @@ app.whenReady().then(() => {
                                 BrowserWindow.getFocusedWindow()?.webContents.send('palette:imported', palette)
                             }
                         }
+                    }
+                },
+                {
+                    label: 'Save',
+                    accelerator: 'CmdOrCtrl+S',
+                    click: async (): Promise<void> => {
+                        BrowserWindow.getFocusedWindow()?.webContents.send('sprite:save-request')
                     }
                 },
                 { type: 'separator' },
@@ -181,5 +188,60 @@ ipcMain.on('palette:import-request', async (event) => {
         if (palette) {
             event.reply('palette:imported', palette)
         }
+    }
+})
+
+ipcMain.handle('sprite:open', async () => {
+    const focusedWindow = BrowserWindow.getFocusedWindow();
+    const result = await dialog.showOpenDialog(focusedWindow!, {
+        title: 'Open Sprite',
+        filters: [{ name: 'JSON Files', extensions: ['json'] }]
+    })
+
+    if (!result.canceled && result.filePaths.length > 0) {
+        try {
+            const content = readFileSync(result.filePaths[0], 'utf8')
+            return {
+                path: result.filePaths[0],
+                content: JSON.parse(content)
+            }
+        } catch (error) {
+            console.error('Failed to open sprite:', error)
+            return null
+        }
+    }
+    return null
+})
+
+ipcMain.handle('sprite:save-as', async (_event, spriteData) => {
+    const focusedWindow = BrowserWindow.getFocusedWindow();
+    const result = await dialog.showSaveDialog(focusedWindow!, {
+        title: 'Save Sprite As',
+        defaultPath: 'animation.json',
+        filters: [
+            { name: 'JSON Files', extensions: ['json'] },
+            { name: 'All Files', extensions: ['*'] }
+        ]
+    })
+
+    if (!result.canceled && result.filePath) {
+        try {
+            writeFileSync(result.filePath, JSON.stringify(spriteData, null, 2), 'utf8')
+            return result.filePath
+        } catch (error) {
+            console.error('Failed to save sprite:', error)
+            return null
+        }
+    }
+    return null
+})
+
+ipcMain.handle('sprite:save-silent', async (_event, path, spriteData) => {
+    try {
+        writeFileSync(path, JSON.stringify(spriteData, null, 2), 'utf8')
+        return true
+    } catch (error) {
+        console.error('Failed to save sprite silently:', error)
+        return false
     }
 })

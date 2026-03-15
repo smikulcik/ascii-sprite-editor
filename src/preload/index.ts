@@ -7,7 +7,14 @@ const api = {
         ipcRenderer.on('palette:imported', (_event, value) => callback(value)),
     removePaletteListeners: () => 
         ipcRenderer.removeAllListeners('palette:imported'),
-    importTerminalProfile: () => ipcRenderer.send('palette:import-request')
+    importTerminalProfile: () => ipcRenderer.send('palette:import-request'),
+    openDialog: () => ipcRenderer.invoke('sprite:open'),
+    saveAs: (spriteData: any) => ipcRenderer.invoke('sprite:save-as', spriteData),
+    saveSilent: (path: string, spriteData: any) => ipcRenderer.invoke('sprite:save-silent', path, spriteData),
+    onSaveRequest: (callback: () => void) => 
+        ipcRenderer.on('sprite:save-request', () => callback()),
+    removeSaveRequestListeners: () => 
+        ipcRenderer.removeAllListeners('sprite:save-request')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
