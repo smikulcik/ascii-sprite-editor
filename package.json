@@ -5,11 +5,13 @@
   "main": "./out/main/index.js",
   "scripts": {
     "dev": "electron-vite dev",
-    "build": "electron-vite build",
     "preview": "electron-vite preview",
     "start": "electron-vite dev",
     "lint": "eslint . --fix",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prebuild": "electron-vite build",
+    "build:mac": "npm run prebuild && electron-builder --mac",
+    "app:dist": "npm run prebuild && electron-builder"
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,7 @@
     "@vitejs/plugin-react": "^5.2.0",
     "autoprefixer": "^10.4.27",
     "electron": "^41.0.2",
+    "electron-builder": "^26.8.1",
     "electron-vite": "^5.0.0",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
@@ -54,5 +57,34 @@
     "plist": "^3.1.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
+  },
+  "build": {
+    "appId": "com.github.smikulcik.ascii-sprite-editor",
+    "productName": "ASCII Sprite Editor",
+    "directories": {
+      "output": "out"
+    },
+    "mac": {
+      "category": "public.app-category.graphics-design",
+      "target": "dmg"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
   }
 }

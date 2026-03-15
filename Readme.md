@@ -14,36 +14,25 @@ A modern, desktop-based ASCII art animation editor built with Electron, TypeScri
 - **Color Control**: Set foreground and background colors for individual cells.
 - **Export**: Save your sprite data as JSON for integration into other projects.
 
-## Getting Started
+## Installation
 
-### Prerequisites
+### Mac
 
-- [Node.js](https://nodejs.org/) (v16.x or higher)
-- npm
+Check out releases: https://github.com/smikulcik/ascii-sprite-editor/releases
 
-### Installation
+- [ascii-sprite-editor-v1.0.0 DMG](https://github.com/smikulcik/ascii-sprite-editor/releases/download/v1.0.0/ascii-sprite-editor-1.0.0.dmg)
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/smikulcik/ascii-sprite-editor.git
-   cd ascii-sprite-editor
-   ```
+### Windows/Linux
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+I haven't figured out how to persuade electron-builder to create a working installer for Windows and Linux. TBD/
 
-### Running the App
+For now, just clone the repo and run locally:
 
-To launch the application in development mode:
 ```bash
+git clone https://github.com/smikulcik/ascii-sprite-editor.git
+cd ascii-sprite-editor
+npm install
 npm start
-```
-
-To build the application for production:
-```bash
-npm run build
 ```
 
 ## Development
