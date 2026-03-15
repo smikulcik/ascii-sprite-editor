@@ -11,7 +11,7 @@ we queue them up for the agent to start work on
 - [x] Improve UI contrast and font sizes
 - [x] Implement sidebar scrolling for minimized windows
 - [x] All tools visible in full screen
-- [ ] UI Contrast needs more. Gridlines and text in dark mode are too dark. same for light mode
+- [x] UI Contrast needs more. Gridlines and text in dark mode are too dark. same for light mode
 
 ### Drawing tools layout (Completed)
 
@@ -29,19 +29,21 @@ we queue them up for the agent to start work on
 
 - [x] Hidden behind options drop down / settings button
 - [x] Show up as a modal with backdrop click-to-close
+- [x] Show the background outside of the canvas to be a shade of gray
+- [x] Within the canvas, show the default color. (Use the checker pattern for transparent)
 
-## Export button
+## Export button (Completed)
 
-- Remove Export button from top right
-- Put it under File > Export
-- When you click it, show a modal with options
-  - Export as gif
-  - Export as sprite sheet png + coords for game engine import (JSON?)
+- [x] Remove Export button from top right
+- [x] Put it under File > Export
+- [x] When you click it, show a modal with options
+  - [x] Export as gif
+  - [x] Export as sprite sheet png + coords for game engine import (JSON?)
 
-## Timeline
+## Timeline (Completed)
 
-- It shows up black even on white backgrounds. It should look like a mini view of the main screen but without the gridlines
-- Needs to auto-update when focus is changed from the main screen
+- [x] It shows up black even on white backgrounds. It should look like a mini view of the main screen but without the gridlines
+- [x] Needs to auto-update when focus is changed from the main screen
 
 ## Grid Off
 
@@ -95,3 +97,30 @@ we queue them up for the agent to start work on
 
 - Importing palettes doesn't seem to work.
 
+## View unused options
+
+-= Remove Toggle Overlays
+- Remove Reset layoutp
+
+## Local storage
+
+- migrate to ~/.config/ascii-sprite-editor
+
+## Key controls
+
+- [x] When I type, letters show up one by one
+- [x] Delete: deletes the character and moves selected to the left
+- [ ] Enter: Move down and to the start of the "line" (line being where I placed my character on the "current row")
+- [ ] Shift+Enter: Move down one
+- [ ] Fn+Delete: Delete the character and move selected to the right
+
+## Drawing tools
+
+- [ ] Pencil should show the path as I draw it along with the characters that would be filled out. But hit "ESC" to cancel the path while holding down the cursor.
+- [ ] Eraser should highlight the cells "Erased" as you go
+- [ ] Box: Fill box of all the same character
+- [ ] Shift+Box: Draw outline of box (Add lower right triangle to signify this is an option)
+
+## Agent controls
+
+- [ ] Update the AGENTS.md and perhaps backfill a knowledge base of how everything works

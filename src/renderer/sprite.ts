@@ -17,6 +17,7 @@ export class Sprite {
     frames: Frame[] = [];
     curFrame: number = 0;
     paletteId: string = 'nordic-aurora';
+    fps: number = 12;
     animator: NodeJS.Timeout | null = null;
     onDraw: () => void = () => { };
 
@@ -154,6 +155,7 @@ export class Sprite {
             width: this.width,
             height: this.height,
             paletteId: this.paletteId,
+            fps: this.fps,
             frames: this.frames
         };
     }
@@ -162,6 +164,7 @@ export class Sprite {
         this.width = data.width || 20;
         this.height = data.height || 10;
         this.paletteId = data.paletteId || 'nordic-aurora';
+        this.fps = data.fps || 12;
         this.frames = data.frames || [this.newFrame()];
         this.curFrame = 0;
         this.onDraw();

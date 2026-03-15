@@ -1,17 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Play, Square, Repeat, RefreshCw } from 'lucide-react'
 import { useSprite } from '../contexts/SpriteContext'
 
 const AnimationControls: React.FC = () => {
-  const { play, stop, isPlaying } = useSprite()
-  const [fps, setFps] = useState(12)
+  const { play, stop, isPlaying, fps, setFps } = useSprite()
 
   return (
     <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-2 bg-brand-surface/90 backdrop-blur-md border border-brand-border rounded-full shadow-2xl z-20 transition-all hover:border-brand-primary/50 group text-brand-text">
       <div className="flex items-center gap-2">
         {!isPlaying ? (
           <button 
-            onClick={() => play(fps)}
+            onClick={() => play()}
             className="w-10 h-10 flex items-center justify-center rounded-full bg-brand-primary hover:bg-brand-primary/80 text-white shadow-lg shadow-brand-primary/30 transition-all hover:scale-105 active:scale-95 group/btn border-2 border-brand-bg relative"
           >
             <Play size={18} className="ml-1 fill-current" />
@@ -42,7 +41,7 @@ const AnimationControls: React.FC = () => {
               onChange={(e) => {
                 const newFps = parseInt(e.target.value)
                 setFps(newFps)
-                if (isPlaying) play(newFps)
+                if (isPlaying) play()
               }}
               className="w-24 h-1 bg-brand-border/40 rounded-lg appearance-none cursor-pointer accent-brand-primary"
             />

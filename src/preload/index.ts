@@ -11,6 +11,7 @@ const api = {
     openDialog: () => ipcRenderer.invoke('sprite:open'),
     saveAs: (spriteData: any) => ipcRenderer.invoke('sprite:save-as', spriteData),
     saveSilent: (path: string, spriteData: any) => ipcRenderer.invoke('sprite:save-silent', path, spriteData),
+    saveGif: (buffer: ArrayBuffer) => ipcRenderer.invoke('sprite:save-gif', buffer),
     onSaveRequest: (callback: () => void) => 
         ipcRenderer.on('sprite:save-request', () => callback()),
     removeSaveRequestListeners: () => 

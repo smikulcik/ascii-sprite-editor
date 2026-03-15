@@ -16,7 +16,7 @@ const CanvasOptions: React.FC = () => {
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-1.5 px-1">
             <Maximize2 size={12} className="text-brand-primary/60" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/50">Dimensions</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/70">Dimensions</span>
           </div>
           <div className="flex items-center gap-2 bg-brand-bg/30 p-2 rounded-xl border border-brand-border/20">
             <InputGroup 
@@ -36,7 +36,7 @@ const CanvasOptions: React.FC = () => {
         <div className="h-px bg-brand-border/50" />
         
         <div className="flex flex-col gap-2">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/50 px-1">Visibility</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text/70 px-1">Visibility</span>
           <div className="grid grid-cols-2 gap-2">
             <button className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-brand-bg/50 hover:bg-brand-surface border border-brand-border/30 transition-all group">
               <Grid3X3 size={14} className="text-brand-text/40 group-hover:text-brand-primary" />

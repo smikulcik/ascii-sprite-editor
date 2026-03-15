@@ -137,7 +137,7 @@ const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ docked }) => {
 
         {/* Color Indicators (Compact) */}
         <div className="relative w-full flex flex-col items-center shrink-0 mb-1 mt-1 px-0.5">
-          <span className="text-[6px] font-mono font-bold text-brand-text/60 mb-1 uppercase text-center block w-full truncate leading-none">{getColorName(fgColor)}</span>
+          <span className="text-[6px] font-mono font-bold text-brand-text/80 mb-1 uppercase text-center block w-full truncate leading-none">{getColorName(fgColor)}</span>
           <div className="relative w-8 h-8">
             {/* BG Color */}
             <div 
@@ -156,7 +156,7 @@ const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ docked }) => {
               {fgColor !== 'transparent' && <div className="absolute inset-0" style={{ backgroundColor: resolveColor(fgColor) }} />}
             </div>
           </div>
-          <span className="text-[6px] font-mono font-bold text-brand-text/60 mt-1 uppercase text-center block w-full truncate leading-none">{getColorName(bgColor)}</span>
+          <span className="text-[6px] font-mono font-bold text-brand-text/80 mt-1 uppercase text-center block w-full truncate leading-none">{getColorName(bgColor)}</span>
         </div>
 
         {/* Palette Selector Section */}
@@ -188,10 +188,18 @@ const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ docked }) => {
                       setPaletteId(p.id)
                       setShowPaletteMenu(false)
                     }}
-                    className={`w-full flex items-center justify-between px-2 py-1.5 rounded transition-all ${activePalette?.id === p.id ? 'bg-brand-primary/10 text-brand-primary font-bold' : 'text-brand-text/60 hover:bg-brand-bg/80 hover:text-brand-text'} text-xs`}
+                    className={`group w-full flex flex-col gap-1.5 px-2 py-1.5 rounded transition-all ${activePalette?.id === p.id ? 'bg-brand-primary/10 text-brand-primary font-bold' : 'text-brand-text/80 hover:bg-brand-bg/80 hover:text-brand-text'} text-xs text-left`}
                   >
-                    <span className="truncate pr-1">{p.name}</span>
-                    {activePalette?.id === p.id && <div className="w-1.5 h-1.5 bg-brand-primary rounded-full" />}
+                    <div className="w-full flex items-center justify-between">
+                      <span className="truncate pr-1">{p.name}</span>
+                      {activePalette?.id === p.id && <div className="w-1.5 h-1.5 bg-brand-primary rounded-full" />}
+                    </div>
+                    {/* Small preview swatches of the palette colors */}
+                    <div className="flex w-full h-1.5 rounded overflow-hidden opacity-80 group-hover:opacity-100 transition-opacity">
+                      {p.ansi.map((color: string, i: number) => (
+                        <div key={i} className="flex-1 h-full" style={{ backgroundColor: color }} />
+                      ))}
+                    </div>
                   </button>
                 ))}
               </div>,
@@ -219,7 +227,7 @@ const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ docked }) => {
 
           {/* ANSI Grid (2x8) */}
           <div className="grid grid-cols-2 gap-1 p-0.5 bg-brand-bg/20 rounded border border-brand-border/10">
-            {activePalette && activePalette.ansi.map((_, i) => (
+            {activePalette && Array.from({ length: 8 }).flatMap((_, i) => [i, i + 8]).map((i) => (
               <button
                 key={i}
                 onClick={(e) => handleColorClick(`ansi:${i}`, e)}

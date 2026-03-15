@@ -27,7 +27,7 @@ const EditorContext = createContext<EditorContextType | undefined>(undefined);
 
 export const EditorProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeTool, setActiveTool] = useState<Tool>('type');
-  const [fgColor, setFgColor] = useState('#c792ea'); // Default to Aurora Purple
+  const [fgColor, setFgColor] = useState('ansi:13'); // Default to Bright Magenta
   const [bgColor, setBgColor] = useState('transparent');
   const [currentCharacter, setCurrentCharacter] = useState('@');
   

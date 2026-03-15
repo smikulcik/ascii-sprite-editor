@@ -24,8 +24,34 @@ const SpriteCanvas: React.FC = () => {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
+    const isDark = document.documentElement.classList.contains('dark')
+
+    // Draw inside background (Checkerboard for transparency)
+    const spriteWidthPx = width * cellWidth
+    const spriteHeightPx = height * cellHeight
+
+    const pCanvas = document.createElement('canvas')
+    pCanvas.width = 16
+    pCanvas.height = 16
+    const pCtx = pCanvas.getContext('2d')
+    if (pCtx) {
+      pCtx.fillStyle = isDark ? '#2a2a2a' : '#f0f0f0'
+      pCtx.fillRect(0, 0, 16, 16)
+      pCtx.fillStyle = isDark ? '#222222' : '#cccccc'
+      pCtx.fillRect(0, 0, 8, 8)
+      pCtx.fillRect(8, 8, 8, 8)
+      const pattern = ctx.createPattern(pCanvas, 'repeat')
+      if (pattern) {
+        ctx.fillStyle = pattern
+        ctx.save()
+        ctx.translate(offset.x, offset.y)
+        ctx.fillRect(0, 0, spriteWidthPx, spriteHeightPx)
+        ctx.restore()
+      }
+    }
+
     // Draw grid
-    ctx.strokeStyle = 'rgba(128, 128, 128, 0.2)'
+    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'
     ctx.lineWidth = 1
     for (let r = 0; r <= height; r++) {
       ctx.beginPath()
@@ -63,11 +89,11 @@ const SpriteCanvas: React.FC = () => {
         cellHeight
       )
     }
-  }, [sprite, width, height, currentFrameIndex, activeCell, offset, cellWidth, cellHeight])
+  }, [sprite, width, height, currentFrameIndex, activeCell, offset, cellWidth, cellHeight, resolveColor])
 
   useEffect(() => {
     render()
-  }, [render])
+  }, [render, zoom])
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.button === 1 || (e.button === 0 && e.altKey)) {
@@ -209,7 +235,7 @@ const SpriteCanvas: React.FC = () => {
   return (
     <div 
       ref={containerRef}
-      className="flex-1 flex flex-col items-center justify-center relative overflow-hidden bg-brand-bg transition-colors"
+      className="flex-1 flex flex-col items-center justify-center relative overflow-hidden bg-slate-200 dark:bg-slate-900 transition-colors"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -217,7 +243,7 @@ const SpriteCanvas: React.FC = () => {
       tabIndex={0}
     >
       {/* Background patterns */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#82aaff_1px,transparent_1px)] [background-size:16px_16px]" />
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[radial-gradient(#82aaff_1px,transparent_1px)] [background-size:16px_16px]" />
       
       <canvas
         ref={canvasRef}
@@ -227,10 +253,10 @@ const SpriteCanvas: React.FC = () => {
       />
 
       <div className="absolute bottom-4 right-4 flex gap-2">
-        <div className="bg-brand-surface border border-brand-border rounded-full px-3 py-1 text-[10px] font-mono text-brand-text/60 shadow-lg">
+        <div className="bg-brand-surface border border-brand-border rounded-full px-3 py-1 text-[10px] font-mono text-brand-text/80 shadow-lg">
           ZOOM: {Math.round(zoom * 100)}%
         </div>
-        <div className="bg-brand-surface border border-brand-border rounded-full px-3 py-1 text-[10px] font-mono text-brand-text/60 shadow-lg">
+        <div className="bg-brand-surface border border-brand-border rounded-full px-3 py-1 text-[10px] font-mono text-brand-text/80 shadow-lg">
           X: {offset.x} Y: {offset.y}
         </div>
       </div>

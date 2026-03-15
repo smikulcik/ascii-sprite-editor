@@ -246,3 +246,23 @@ ipcMain.handle('sprite:save-silent', async (_event, path, spriteData) => {
         return false
     }
 })
+
+ipcMain.handle('sprite:save-gif', async (_event, buffer: ArrayBuffer) => {
+    const focusedWindow = BrowserWindow.getFocusedWindow();
+    const result = await dialog.showSaveDialog(focusedWindow!, {
+        title: 'Export GIF',
+        defaultPath: 'animation.gif',
+        filters: [{ name: 'GIF Images', extensions: ['gif'] }]
+    })
+
+    if (!result.canceled && result.filePath) {
+        try {
+            writeFileSync(result.filePath, Buffer.from(buffer))
+            return result.filePath
+        } catch (error) {
+            console.error('Failed to export GIF:', error)
+            return null
+        }
+    }
+    return null
+})

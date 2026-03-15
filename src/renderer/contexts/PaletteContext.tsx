@@ -80,9 +80,18 @@ const PaletteContext = createContext<PaletteContextType | undefined>(undefined);
 
 export const PaletteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [palettes, setPalettes] = useState<Palette[]>(() => {
+    const defaultPalettes = [NORDIC_AURORA, BLUEPRINT, VGA_CONSOLE, XTERM, WINDOWS_10];
     const saved = localStorage.getItem('palettes');
-    if (saved) return JSON.parse(saved);
-    return [NORDIC_AURORA, BLUEPRINT, VGA_CONSOLE, XTERM, WINDOWS_10];
+    if (saved) {
+      try {
+        const parsed: Palette[] = JSON.parse(saved);
+        const customPalettes = parsed.filter(p => !defaultPalettes.some(dp => dp.id === p.id));
+        return [...defaultPalettes, ...customPalettes];
+      } catch (e) {
+        return defaultPalettes;
+      }
+    }
+    return defaultPalettes;
   });
 
   const [activePaletteId, setActivePaletteId] = useState<string>(() => {

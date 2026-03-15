@@ -12,6 +12,8 @@ interface SpriteContextType {
   paletteId: string;
   filePath: string | null;
   isDirty: boolean;
+  version: number;
+  fps: number;
   
   // Actions
   updateCell: (row: number, col: number, data: Cell | null) => void;
@@ -21,6 +23,7 @@ interface SpriteContextType {
   resize: (width: number, height: number) => void;
   setActiveCell: (cell: { row: number; col: number } | null) => void;
   setPaletteId: (id: string) => void;
+  setFps: (fps: number) => void;
   newFile: () => void;
   openFile: (path: string, content: any) => void;
   saveFile: (silent?: boolean) => Promise<boolean>;
@@ -48,8 +51,10 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [activeCell, setActiveCell] = useState<{ row: number; col: number } | null>({ row: 0, col: 0 });
   const [selection] = useState<{ start: { row: number; col: number }; end: { row: number; col: number } } | null>(null);
   const [paletteId, setPaletteIdState] = useState(sprite.paletteId);
+  const [fps, setFpsState] = useState(sprite.fps);
   const [filePath, setFilePath] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
+  const [version, setVersion] = useState(0);
   
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 50, y: 50 });
@@ -61,6 +66,8 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setFrames([...sprite.frames]);
     setCurrentFrameIndex(sprite.curFrame);
     setPaletteIdState(sprite.paletteId);
+    setFpsState(sprite.fps);
+    setVersion(v => v + 1);
   }, [sprite]);
 
   useEffect(() => {
@@ -103,6 +110,12 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setPaletteIdState(id);
   };
 
+  const setFps = (newFps: number) => {
+    sprite.fps = newFps;
+    setIsDirty(true);
+    setFpsState(newFps);
+  };
+
   const newFile = () => {
     sprite.load({ width: 20, height: 10, frames: null, paletteId: 'nordic-aurora' });
     setFilePath(null);
@@ -137,8 +150,8 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     return false;
   };
 
-  const play = (fps: number = 12) => {
-    sprite.play(1000 / fps);
+  const play = () => {
+    sprite.play(1000 / sprite.fps);
   };
 
   const stop = () => {
@@ -163,8 +176,11 @@ export const SpriteProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       setActiveCell,
       paletteId,
       setPaletteId,
+      fps,
+      setFps,
       filePath,
       isDirty,
+      version,
       newFile,
       openFile,
       saveFile,

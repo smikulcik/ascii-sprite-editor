@@ -5,9 +5,10 @@ import { Sun, Moon, ChevronDown, Monitor, FileText, Settings, Layout, Layers, Pl
 
 interface TopBarProps {
   onShowOptions?: () => void;
+  onShowExport?: () => void;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ onShowOptions }) => {
+const TopBar: React.FC<TopBarProps> = ({ onShowOptions, onShowExport }) => {
   const { theme, toggleTheme } = useTheme()
   const { filePath, isDirty, newFile, openFile, saveFile } = useSprite()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
@@ -78,7 +79,7 @@ const TopBar: React.FC<TopBarProps> = ({ onShowOptions }) => {
         </div>
         <div className="flex flex-col">
           <h1 className="font-bold tracking-tight text-brand-text leading-none">ASCII Sprite</h1>
-          <span className="text-[10px] text-brand-text/50 font-mono mt-0.5">{getTitle()}</span>
+          <span className="text-[10px] text-brand-text/70 font-mono mt-0.5">{getTitle()}</span>
         </div>
       </div>
       
@@ -118,7 +119,7 @@ const TopBar: React.FC<TopBarProps> = ({ onShowOptions }) => {
                     </div>
                   </button>
                   
-                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-brand-text/50 cursor-not-allowed">
+                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-brand-text/70 cursor-not-allowed">
                     <Monitor size={16} />
                     <span>Follow System</span>
                   </button>
@@ -202,6 +203,14 @@ const TopBar: React.FC<TopBarProps> = ({ onShowOptions }) => {
                   <SaveAll size={14} />
                   <span>Save As...</span>
                 </button>
+                <div className="my-1 border-t border-brand-border" />
+                <button 
+                  onClick={() => { onShowExport?.(); setActiveMenu(null); }}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-brand-primary/10 hover:text-brand-primary transition-colors text-sm text-left"
+                >
+                  <PlaySquare size={14} />
+                  <span>Export...</span>
+                </button>
               </div>
             )}
           </div>
@@ -209,10 +218,6 @@ const TopBar: React.FC<TopBarProps> = ({ onShowOptions }) => {
       </nav>
       
       <div className="ml-auto flex items-center gap-2">
-        <button className="px-4 py-1.5 bg-brand-primary hover:bg-brand-primary/80 text-white rounded text-sm font-semibold transition-all shadow-md active:scale-95 flex items-center gap-2">
-          <PlaySquare size={16} />
-          Export
-        </button>
       </div>
     </header>
   )

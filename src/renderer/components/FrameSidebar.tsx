@@ -5,7 +5,7 @@ import { usePalette } from '../contexts/PaletteContext'
 import { Frame } from '../sprite'
 
 const FrameSidebar: React.FC = () => {
-  const { frames, currentFrameIndex, setCurrentFrame, addFrame, deleteFrame, sprite } = useSprite()
+  const { frames, currentFrameIndex, setCurrentFrame, addFrame, deleteFrame, sprite, version } = useSprite()
 
   return (
     <aside className="w-60 bg-brand-surface border-r border-brand-border flex flex-col shrink-0 z-10 transition-all shadow-xl">
@@ -29,6 +29,7 @@ const FrameSidebar: React.FC = () => {
             onClick={() => setCurrentFrame(index)}
             onDelete={() => deleteFrame(index)}
             sprite={sprite}
+            version={version}
           />
         ))}
       </div>
@@ -43,9 +44,10 @@ interface FrameItemProps {
   onClick: () => void;
   onDelete: () => void;
   sprite: any;
+  version: number;
 }
 
-const FrameItem: React.FC<FrameItemProps> = ({ frame, index, isActive, onClick, onDelete, sprite }) => {
+const FrameItem: React.FC<FrameItemProps> = ({ frame, index, isActive, onClick, onDelete, sprite, version }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { resolveColor } = usePalette()
 
@@ -57,9 +59,25 @@ const FrameItem: React.FC<FrameItemProps> = ({ frame, index, isActive, onClick, 
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     
-    // Transparent background pattern
-    ctx.fillStyle = '#1a1c25'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    const isDark = document.documentElement.classList.contains('dark')
+
+    // Create checkerboard background pattern
+    const pCanvas = document.createElement('canvas')
+    pCanvas.width = 16
+    pCanvas.height = 16
+    const pCtx = pCanvas.getContext('2d')
+    if (pCtx) {
+      pCtx.fillStyle = isDark ? '#2a2a2a' : '#f0f0f0'
+      pCtx.fillRect(0, 0, 16, 16)
+      pCtx.fillStyle = isDark ? '#222222' : '#cccccc'
+      pCtx.fillRect(0, 0, 8, 8)
+      pCtx.fillRect(8, 8, 8, 8)
+      const pattern = ctx.createPattern(pCanvas, 'repeat')
+      if (pattern) {
+        ctx.fillStyle = pattern
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+      }
+    }
     
     // Draw frame preview
     const scale = Math.min(canvas.width / (sprite.width * 10), canvas.height / (sprite.height * 20))
@@ -70,7 +88,7 @@ const FrameItem: React.FC<FrameItemProps> = ({ frame, index, isActive, onClick, 
 
     // Use a simplified draw for preview
     sprite.draw(ctx, index, offsetX, offsetY, cellW, cellH, resolveColor)
-  }, [frame, sprite, index, resolveColor])
+  }, [frame, sprite, index, resolveColor, version])
 
   return (
     <div 
@@ -99,7 +117,7 @@ const FrameItem: React.FC<FrameItemProps> = ({ frame, index, isActive, onClick, 
         </div>
       </div>
 
-      <div className="aspect-video bg-[#0a0c14] relative p-2 flex items-center justify-center">
+      <div className="aspect-video bg-transparent relative p-2 flex items-center justify-center">
         <canvas 
           ref={canvasRef} 
           width={180} 
