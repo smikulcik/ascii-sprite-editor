@@ -57,9 +57,9 @@ we queue them up for the agent to start work on
 
 # Hotkeys
 
-- Needs implementing a hotkey system
-- Should have a good default
-- Add a configuration option to change them
+- [x] Needs implementing a hotkey system
+- [x] Should have a good default
+- [ ] Add a configuration option to change them
 
 ## Layers system
 
@@ -111,9 +111,9 @@ we queue them up for the agent to start work on
 
 - [x] When I type, letters show up one by one
 - [x] Delete: deletes the character and moves selected to the left
-- [ ] Enter: Move down and to the start of the "line" (line being where I placed my character on the "current row")
-- [ ] Shift+Enter: Move down one
-- [ ] Fn+Delete: Delete the character and move selected to the right
+- [x] Enter: Move down and to the start of the "line" (line being where I placed my character on the "current row")
+- [x] Shift+Enter: Move down one
+- [x] Fn+Delete: Delete the character and move selected to the right
 
 ## Drawing tools
 

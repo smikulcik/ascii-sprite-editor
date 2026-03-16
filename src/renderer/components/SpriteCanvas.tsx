@@ -2,16 +2,22 @@ import React, { useRef, useEffect, useState, useCallback } from 'react'
 import { useSprite } from '../contexts/SpriteContext'
 import { useEditor } from '../contexts/EditorContext'
 import { usePalette } from '../contexts/PaletteContext'
+import { useHotkeys } from '../hooks/useHotkeys'
+import { HotkeyAction } from '../config/hotkeys'
 
 const SpriteCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const { sprite, width, height, currentFrameIndex, activeCell, setActiveCell, updateCell, zoom, setZoom, offset, setOffset } = useSprite()
-  const { activeTool, fgColor, bgColor, currentCharacter, bold, italic, underline, strikeThrough } = useEditor()
+  const { 
+    activeTool, setActiveTool, 
+    fgColor, bgColor, currentCharacter, bold, italic, underline, strikeThrough 
+  } = useEditor()
   const { resolveColor } = usePalette()
   
   const [isPanning, setIsPanning] = useState(false)
   const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
+  const [lineStartCol, setLineStartCol] = useState<number | null>(null)
 
   const cellWidth = 20 * zoom
   const cellHeight = 40 * zoom // 2:1 ratio roughly for courier
@@ -114,6 +120,7 @@ const SpriteCanvas: React.FC = () => {
       
       if (col >= 0 && col < width && row >= 0 && row < height) {
         setActiveCell({ row, col })
+        setLineStartCol(col)
         
         if (activeTool === 'pencil') {
           updateCell(row, col, {
@@ -130,6 +137,7 @@ const SpriteCanvas: React.FC = () => {
         }
       } else {
         setActiveCell(null)
+        setLineStartCol(null)
       }
     }
   }
@@ -187,6 +195,32 @@ const SpriteCanvas: React.FC = () => {
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!activeCell) return
 
+    // Handle special keys for text input
+    if (e.key === 'Enter') {
+      // Enter: Move down and back to the line start column
+      if (!e.shiftKey) {
+        e.preventDefault()
+        const targetCol = lineStartCol !== null ? lineStartCol : activeCell.col
+        setActiveCell({ row: Math.min(height - 1, activeCell.row + 1), col: targetCol })
+      } else {
+        // Shift+Enter: Move down one, stay in same column
+        e.preventDefault()
+        setActiveCell({ row: Math.min(height - 1, activeCell.row + 1), col: activeCell.col })
+      }
+      return
+    }
+
+    if (e.key === 'Delete') {
+      // Fn+Delete (or just Delete on some keyboards): Delete and move right
+      // Check if this is the "delete right" variant by checking if Fn was pressed
+      // Note: Fn+Delete sends Delete key, regular Delete sends Backspace
+      updateCell(activeCell.row, activeCell.col, null)
+      if (activeCell.col < width - 1) {
+        setActiveCell({ row: activeCell.row, col: activeCell.col + 1 })
+      }
+      return
+    }
+
     if (e.key === 'ArrowUp') {
       setActiveCell({ row: Math.max(0, activeCell.row - 1), col: activeCell.col })
       e.preventDefault()
@@ -199,9 +233,9 @@ const SpriteCanvas: React.FC = () => {
     } else if (e.key === 'ArrowRight') {
       setActiveCell({ row: activeCell.row, col: Math.min(width - 1, activeCell.col + 1) })
       e.preventDefault()
-    } else if (e.key === 'Backspace' || e.key === 'Delete') {
+    } else if (e.key === 'Backspace') {
       updateCell(activeCell.row, activeCell.col, null)
-      if (e.key === 'Backspace' && activeCell.col > 0) {
+      if (activeCell.col > 0) {
         setActiveCell({ row: activeCell.row, col: activeCell.col - 1 })
       }
     } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
@@ -225,12 +259,43 @@ const SpriteCanvas: React.FC = () => {
         }
       }
     }
-  }, [activeCell, activeTool, height, width, fgColor, bgColor, bold, italic, underline, strikeThrough, updateCell, setActiveCell])
+  }, [activeCell, activeTool, height, width, fgColor, bgColor, bold, italic, underline, strikeThrough, updateCell, setActiveCell, lineStartCol])
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
+
+  // Handle global hotkeys for tool switching
+  const handleHotkey = useCallback((action: HotkeyAction, event: KeyboardEvent) => {
+    switch (action) {
+      case 'tool:pencil':
+        setActiveTool('pencil')
+        event.preventDefault()
+        break
+      case 'tool:box':
+        setActiveTool('box')
+        event.preventDefault()
+        break
+      case 'tool:type':
+        setActiveTool('type')
+        event.preventDefault()
+        break
+      case 'tool:eraser':
+        setActiveTool('eraser')
+        event.preventDefault()
+        break
+      // Other hotkey actions can be implemented later
+      case 'undo':
+      case 'redo':
+      case 'toggle-grid':
+      case 'toggle-onion-skin':
+        // TODO: Implement these features
+        break
+    }
+  }, [setActiveTool])
+
+  useHotkeys(handleHotkey)
 
   return (
     <div 
