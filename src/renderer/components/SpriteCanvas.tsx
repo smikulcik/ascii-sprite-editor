@@ -4,6 +4,8 @@ import { useEditor } from '../contexts/EditorContext'
 import { usePalette } from '../contexts/PaletteContext'
 import { useHotkeys } from '../hooks/useHotkeys'
 import { HotkeyAction } from '../config/hotkeys'
+import { Point as PathPoint } from '../utils/pathSimplification'
+import { interpolateSpline, getCellsForSplinePath } from '../utils/splineInterpolation'
 
 const SpriteCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -17,7 +19,14 @@ const SpriteCanvas: React.FC = () => {
   
   const [isPanning, setIsPanning] = useState(false)
   const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
+  const [currentMousePos, setCurrentMousePos] = useState({ x: 0, y: 0 })
   const [lineStartCol, setLineStartCol] = useState<number | null>(null)
+  
+  // Drawing path tracking
+  const [isDrawing, setIsDrawing] = useState(false)
+  const [pathPoints, setPathPoints] = useState<PathPoint[]>([])
+  const [previewCells, setPreviewCells] = useState<Array<{ row: number; col: number }>>([])
+  const [boxStart, setBoxStart] = useState<{ row: number; col: number } | null>(null)
 
   const cellWidth = 20 * zoom
   const cellHeight = 40 * zoom // 2:1 ratio roughly for courier
@@ -75,6 +84,27 @@ const SpriteCanvas: React.FC = () => {
     // Draw Sprite
     sprite.draw(ctx, currentFrameIndex, offset.x, offset.y, cellWidth, cellHeight, resolveColor)
 
+    // Draw preview cells (semi-transparent)
+    if (previewCells.length > 0) {
+      ctx.fillStyle = 'rgba(199, 146, 234, 0.25)'
+      ctx.strokeStyle = 'rgba(199, 146, 234, 0.5)'
+      ctx.lineWidth = 1
+      for (const cell of previewCells) {
+        ctx.fillRect(
+          offset.x + cell.col * cellWidth,
+          offset.y + cell.row * cellHeight,
+          cellWidth,
+          cellHeight
+        )
+        ctx.strokeRect(
+          offset.x + cell.col * cellWidth,
+          offset.y + cell.row * cellHeight,
+          cellWidth,
+          cellHeight
+        )
+      }
+    }
+
     // Draw active cell highlight
     if (activeCell) {
       ctx.strokeStyle = 'var(--primary)'
@@ -95,7 +125,30 @@ const SpriteCanvas: React.FC = () => {
         cellHeight
       )
     }
-  }, [sprite, width, height, currentFrameIndex, activeCell, offset, cellWidth, cellHeight, resolveColor])
+
+    // Draw path visualization during drawing (full real path)
+    if (isDrawing && pathPoints.length > 1) {
+      // Dark grey stroke (outline)
+      ctx.strokeStyle = 'rgba(60, 60, 60, 0.8)'
+      ctx.lineWidth = 3
+      ctx.beginPath()
+      ctx.moveTo(pathPoints[0].x, pathPoints[0].y)
+      for (let i = 1; i < pathPoints.length; i++) {
+        ctx.lineTo(pathPoints[i].x, pathPoints[i].y)
+      }
+      ctx.stroke()
+      
+      // Off-white main stroke
+      ctx.strokeStyle = 'rgba(240, 240, 240, 0.9)'
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(pathPoints[0].x, pathPoints[0].y)
+      for (let i = 1; i < pathPoints.length; i++) {
+        ctx.lineTo(pathPoints[i].x, pathPoints[i].y)
+      }
+      ctx.stroke()
+    }
+  }, [sprite, width, height, currentFrameIndex, activeCell, offset, cellWidth, cellHeight, resolveColor, previewCells, isDrawing, pathPoints])
 
   useEffect(() => {
     render()
@@ -122,18 +175,15 @@ const SpriteCanvas: React.FC = () => {
         setActiveCell({ row, col })
         setLineStartCol(col)
         
-        if (activeTool === 'pencil') {
-          updateCell(row, col, {
-            value: currentCharacter,
-            fg_color: fgColor,
-            bg_color: bgColor,
-            weight: bold ? 'bold' : 'normal',
-            italic,
-            underline,
-            strike_through: strikeThrough
-          })
-        } else if (activeTool === 'eraser') {
-          updateCell(row, col, null)
+        // Initialize drawing for pencil and eraser
+        if (activeTool === 'pencil' || activeTool === 'eraser') {
+          setIsDrawing(true)
+          setPathPoints([{ x: mouseX, y: mouseY }])
+          setPreviewCells([{ row, col }])
+        } else if (activeTool === 'box') {
+          setBoxStart({ row, col })
+        } else if (activeTool === 'type') {
+          // Type tool doesn't use path
         }
       } else {
         setActiveCell(null)
@@ -143,6 +193,13 @@ const SpriteCanvas: React.FC = () => {
   }
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = canvasRef.current?.getBoundingClientRect()
+    if (!rect) return
+
+    const mouseX = e.clientX - rect.left
+    const mouseY = e.clientY - rect.top
+    setCurrentMousePos({ x: mouseX, y: mouseY })
+
     if (isPanning) {
       const dx = e.clientX - lastMousePos.x
       const dy = e.clientY - lastMousePos.y
@@ -151,19 +208,65 @@ const SpriteCanvas: React.FC = () => {
       return
     }
 
-    if (e.buttons === 1 && activeCell) {
-       const rect = canvasRef.current?.getBoundingClientRect()
-      if (!rect) return
+    if (isDrawing && (activeTool === 'pencil' || activeTool === 'eraser')) {
+      // Add point to path
+      const newPoints = [...pathPoints, { x: mouseX, y: mouseY }]
+      setPathPoints(newPoints)
       
-      const mouseX = e.clientX - rect.left
-      const mouseY = e.clientY - rect.top
+      // Update preview: interpolate the raw path
+      if (newPoints.length >= 2) {
+        const interpolated = interpolateSpline(newPoints, 5)
+        const cells = getCellsForSplinePath(interpolated, cellWidth, cellHeight, offset)
+        setPreviewCells(cells)
+      }
       
+      render()
+    } else if (boxStart && activeTool === 'box') {
       const col = Math.floor((mouseX - offset.x) / cellWidth)
       const row = Math.floor((mouseY - offset.y) / cellHeight)
       
+      // Update box preview
+      const minCol = Math.min(boxStart.col, col)
+      const maxCol = Math.max(boxStart.col, col)
+      const minRow = Math.min(boxStart.row, row)
+      const maxRow = Math.max(boxStart.row, row)
+      
+      const preview = []
+      for (let r = minRow; r <= maxRow; r++) {
+        for (let c = minCol; c <= maxCol; c++) {
+          if (r >= 0 && r < height && c >= 0 && c < width) {
+            preview.push({ row: r, col: c })
+          }
+        }
+      }
+      setPreviewCells(preview)
+      render()
+    }
+  }
+
+  const applyPath = (points: PathPoint[]) => {
+    if (points.length < 1) return
+
+    let cells: Array<{ row: number; col: number }> = []
+
+    if (points.length === 1) {
+      // Single click: just fill that one cell
+      const col = Math.floor((points[0].x - offset.x) / cellWidth)
+      const row = Math.floor((points[0].y - offset.y) / cellHeight)
       if (col >= 0 && col < width && row >= 0 && row < height) {
+        cells = [{ row, col }]
+      }
+    } else {
+      // Multiple points: interpolate spline
+      const interpolated = interpolateSpline(points, 5)
+      cells = getCellsForSplinePath(interpolated, cellWidth, cellHeight, offset)
+    }
+
+    // Apply to sprite
+    for (const cell of cells) {
+      if (cell.row >= 0 && cell.row < height && cell.col >= 0 && cell.col < width) {
         if (activeTool === 'pencil') {
-          updateCell(row, col, {
+          updateCell(cell.row, cell.col, {
             value: currentCharacter,
             fg_color: fgColor,
             bg_color: bgColor,
@@ -173,7 +276,7 @@ const SpriteCanvas: React.FC = () => {
             strike_through: strikeThrough
           })
         } else if (activeTool === 'eraser') {
-          updateCell(row, col, null)
+          updateCell(cell.row, cell.col, null)
         }
       }
     }
@@ -181,6 +284,50 @@ const SpriteCanvas: React.FC = () => {
 
   const handleMouseUp = () => {
     setIsPanning(false)
+    
+    if (isDrawing && (activeTool === 'pencil' || activeTool === 'eraser')) {
+      applyPath(pathPoints)
+      setIsDrawing(false)
+      setPathPoints([])
+      setPreviewCells([])
+      render()
+    } else if (boxStart && activeTool === 'box') {
+      const col = Math.floor((currentMousePos.x - offset.x) / cellWidth)
+      const row = Math.floor((currentMousePos.y - offset.y) / cellHeight)
+      
+      const minCol = Math.min(boxStart.col, col)
+      const maxCol = Math.max(boxStart.col, col)
+      const minRow = Math.min(boxStart.row, row)
+      const maxRow = Math.max(boxStart.row, row)
+      
+      // Check if Shift was pressed during the initial click (we can check if this was intended to be outline)
+      // For now, we'll provide outline mode when drawing a 1D box (just a line)
+      const isOutline = minRow === maxRow || minCol === maxCol
+      
+      for (let r = minRow; r <= maxRow; r++) {
+        for (let c = minCol; c <= maxCol; c++) {
+          const isEdge = r === minRow || r === maxRow || c === minCol || c === maxCol
+          
+          if (!isOutline || isEdge) {
+            if (r >= 0 && r < height && c >= 0 && c < width) {
+              updateCell(r, c, {
+                value: currentCharacter,
+                fg_color: fgColor,
+                bg_color: bgColor,
+                weight: bold ? 'bold' : 'normal',
+                italic,
+                underline,
+                strike_through: strikeThrough
+              })
+            }
+          }
+        }
+      }
+      
+      setBoxStart(null)
+      setPreviewCells([])
+      render()
+    }
   }
 
   const handleWheel = (e: React.WheelEvent) => {
@@ -193,6 +340,19 @@ const SpriteCanvas: React.FC = () => {
   }
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    // ESC key to cancel current drawing
+    if (e.key === 'Escape') {
+      if (isDrawing || boxStart) {
+        e.preventDefault()
+        setIsDrawing(false)
+        setPathPoints([])
+        setBoxStart(null)
+        setPreviewCells([])
+        render()
+      }
+      return
+    }
+
     if (!activeCell) return
 
     // Handle special keys for text input
@@ -259,7 +419,7 @@ const SpriteCanvas: React.FC = () => {
         }
       }
     }
-  }, [activeCell, activeTool, height, width, fgColor, bgColor, bold, italic, underline, strikeThrough, updateCell, setActiveCell, lineStartCol])
+  }, [activeCell, activeTool, height, width, fgColor, bgColor, bold, italic, underline, strikeThrough, updateCell, setActiveCell, lineStartCol, isDrawing, boxStart, render])
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)

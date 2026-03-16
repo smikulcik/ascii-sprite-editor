@@ -117,10 +117,10 @@ we queue them up for the agent to start work on
 
 ## Drawing tools
 
-- [ ] Pencil should show the path as I draw it along with the characters that would be filled out. But hit "ESC" to cancel the path while holding down the cursor.
-- [ ] Eraser should highlight the cells "Erased" as you go
-- [ ] Box: Fill box of all the same character
-- [ ] Shift+Box: Draw outline of box (Add lower right triangle to signify this is an option)
+- [x] Pencil should show the path as I draw it along with the characters that would be filled out. But hit "ESC" to cancel the path while holding down the cursor.
+- [x] Eraser should highlight the cells "Erased" as you go
+- [x] Box: Fill box of all the same character
+- [x] Shift+Box: Draw outline of box (Add lower right triangle to signify this is an option)
 
 ## Agent controls
 
